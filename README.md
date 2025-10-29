@@ -1,2 +1,2 @@
 # choutenshi.github.io
-Making sense of Alvin-ahh website project
+My first project I (probably) made myself.
