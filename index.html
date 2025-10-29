@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta property="og:title" content="Alvin | Choutenshi" />
+  <meta property="og:description" content="Chess, tech, and music enjoyer. I'm Alvin (aka Choutenshi)" />
+  <meta property="og:image" content="https://i.pinimg.com/736x/51/99/65/51996541c1954771ecbc463abe1c1ed1.jpg" />
+  <title>Alvin // Choutenshi</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #00ff66;
+      font-family: "Courier New", monospace;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: left;
+      padding: 20px;
+    }
+    .terminal {
+      max-width: 700px;
+      width: 100%;
+      border: 2px solid #00ff66;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 0 20px #00ff66;
+    }
+    .prompt::before {
+      content: "choutenshi@web:~$ ";
+      color: #00ff66;
+    }
+    a {
+      color: #00ff66;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    img.pfp {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 2px solid #00ff66;
+      margin-bottom: 15px;
+    }
+    .blink {
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink {
+      from, to { color: transparent; }
+      50% { color: #00ff66; }
+    }
+  </style>
+</head>
+<body>
+  <div class="terminal">
+    <img class="pfp" src="https://i.pinimg.com/736x/a4/6b/0e/a46b0e1a4e50ba790d94f0507ad0b6e7.jpg" alt="pfp" />
+    <p class="prompt">whoami</p>
+    <p>Alvin // aka <b>Choutenshi</b> // alias <b>MHDXVN</b></p>
+
+    <p class="prompt">about</p>
+    <p>This is my biography, but my mom knows me better so I'll left this empty.</p>
+
+    <p class="prompt">socials</p>
+    <ul>
+      <li><a href="https://github.com/Choutenshi" target="_blank">GitHub: @Choutenshi</a></li>
+      <li><a href="https://x.com/Choutenzhi" target="_blank">X / Twitter: @Choutenzhi</a></li>
+      <li><a href="https://reddit.com/u/Choutenz" target="_blank">Reddit: @Choutenz</a></li>
+      <li><a href="https://discord.com/users/choutenshi." target="_blank">Discord: @choutenshi.</a></li>
+    </ul>
+
+    <p class="prompt">exit</p>
+    <p>logging off<span class="blink">_</span></p>
+  </div>
+</body>
+</html>
