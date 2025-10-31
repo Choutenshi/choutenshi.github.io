@@ -1,79 +1,251 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta property="og:title" content="Alvin | Choutenshi" />
-  <meta property="og:description" content="I'm Alvin, aka Choutenshi and was known as MHDXVN. Contact me here: " />
-  <meta property="og:image" content="https://i.pinimg.com/736x/51/99/65/51996541c1954771ecbc463abe1c1ed1.jpg" />
-  <title>Alvin // Choutenshi</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alvin (Choutenshi)'s links!</title>
   <style>
-    body {
-      background-color: #000;
-      color: #00ff66;
-      font-family: "Courier New", monospace;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      text-align: left;
-      padding: 20px;
+    :root{
+      --bg:#0b1220;
+      --panel:#0f2940;
+      --accent:#2ea5ff;
+      --muted:#9fbfdc;
+      --glass: rgba(255,255,255,0.04);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
     }
-    .terminal {
-      max-width: 700px;
-      width: 100%;
-      border: 2px solid #00ff66;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 0 20px #00ff66;
-    }
-    .prompt::before {
-      content: "choutenshi@web:~$ ";
-      color: #00ff66;
-    }
-    a {
-      color: #00ff66;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    img.pfp {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      border: 2px solid #00ff66;
-      margin-bottom: 15px;
-    }
-    .blink {
-      animation: blink 1s step-end infinite;
-    }
-    @keyframes blink {
-      from, to { color: transparent; }
-      50% { color: #00ff66; }
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#071024 0%, #0b1b33 60%);color:#e8f6ff}
+    .wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+
+    /* card */
+    .card{width:920px;max-width:95%;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:16px;box-shadow:0 10px 30px rgba(2,8,23,0.6);overflow:hidden;border:1px solid rgba(255,255,255,0.03);display:flex}
+
+    /* left sprite area */
+    .left{width:360px;padding:22px 18px 18px;background:linear-gradient(180deg, rgba(46,165,255,0.03), rgba(10,20,30,0.02));display:flex;flex-direction:column;align-items:center;gap:12px}
+    .sprite{width:320px;height:420px;background-size:contain;background-position:center bottom;background-repeat:no-repeat;border-radius:12px;box-shadow:inset 0 -60px 80px rgba(2,8,23,0.6)}
+    .credits{font-size:12px;color:var(--muted);opacity:0.9}
+
+    /* right content */
+    .right{flex:1;padding:20px 20px 24px;display:flex;flex-direction:column;gap:12px}
+    .topbar{display:flex;align-items:center;justify-content:space-between}
+    h1{font-size:18px;margin:0;color:var(--accent)}
+    p.subtitle{margin:0;color:var(--muted);font-size:13px}
+
+    /* VN textbox */
+    .vnbox{margin-top:auto;background:linear-gradient(180deg, rgba(10,24,40,0.9), rgba(6,14,26,0.95));border-radius:12px;padding:16px;border:1px solid rgba(255,255,255,0.03);display:flex;gap:14px;align-items:flex-end}
+    .vn-text{flex:1}
+    .ch-name{font-weight:600;color:var(--accent);font-size:13px;margin-bottom:6px}
+    .ch-line{font-size:15px;color:#dff4ff;line-height:1.4}
+
+    /* choices */
+    .choices{display:flex;gap:8px;margin-top:10px}
+    .choice{background:var(--glass);padding:8px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);cursor:pointer;user-select:none;font-weight:600}
+    .choice:hover{transform:translateY(-3px)}
+
+    /* social grid */
+    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
+    .social{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);display:flex;align-items:center;gap:12px}
+    .social .icon{width:48px;height:48px;border-radius:8px;background:rgba(255,255,255,0.03);display:flex;align-items:center;justify-content:center;font-weight:700}
+    .social .meta{flex:1}
+    .social .meta .title{font-weight:700}
+    .social .meta .handle{font-size:13px;color:var(--muted)}
+    .btn-link{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:6px 10px;border-radius:8px;cursor:pointer}
+
+    /* biography box */
+    .bio-box{margin-top:12px;background:linear-gradient(180deg, rgba(46,165,255,0.04), rgba(10,20,30,0.02));padding:12px;border-radius:10px;border:1px solid rgba(46,165,255,0.12);cursor:pointer}
+    .bio-title{font-weight:800}
+    .bio-sub{font-size:13px;color:var(--muted)}
+
+    footer.help{font-size:12px;color:var(--muted);text-align:center;margin-top:10px}
+
+    /* small screens */
+    @media (max-width:820px){
+      .card{flex-direction:column}
+      .left{width:100%;order:2}
+      .sprite{width:80%;height:320px}
     }
   </style>
 </head>
 <body>
-  <div class="terminal">
-    <img class="pfp" src="https://i.pinimg.com/736x/a4/6b/0e/a46b0e1a4e50ba790d94f0507ad0b6e7.jpg" alt="pfp" />
-    <p class="prompt">whoami</p>
-    <p>Alvin // aka <b>Choutenshi</b> // alias <b>MHDXVN</b></p>
+  <div class="wrap">
+    <div class="card" role="application" aria-label="Alvin's Links">
+      <div class="left">
+        <!-- removed potentially problematic inline background-image URL; set via JS to avoid parser issues -->
+        <div id="sprite" class="sprite" aria-hidden="true"></div>
+        <div class="credits">Sprite: Blue Archive Wiki — Mika</div>
+      </div>
 
-    <p class="prompt">about</p>
-    <p>This is supposed to be my bio. But no, those are private things.</p>
+      <div class="right">
+        <div class="topbar">
+          <div>
+            <h1>Alvin — Links</h1>
+            <p class="subtitle">Quick access to social media. Mika will guide you.</p>
+          </div>
+        </div>
 
-    <p class="prompt">socials</p>
-    <ul>
-      <li><a href="https://github.com/Choutenshi" target="_blank">GitHub: @Choutenshi</a></li>
-      <li><a href="https://x.com/Choutenzhi" target="_blank">X / Twitter: @Choutenzhi</a></li>
-      <li><a href="https://reddit.com/u/Choutenz" target="_blank">Reddit: @Choutenz</a></li>
-      <li><a href="https://discord.com/users/choutenshi." target="_blank">Discord: @choutenshi.</a></li>
-    </ul>
+        <div class="vnbox" id="vnbox">
+          <div class="vn-text">
+            <div class="ch-name">Mika</div>
+            <div class="ch-line" id="ch-line">Sensei! Alvin isn't here right now! Tell me, where do you want to go?</div>
+            <div class="choices" id="choices">
+              <div class="choice" data-action="social">Social Media</div>
+              <div class="choice" data-action="bio">Biography</div>
+            </div>
+          </div>
+        </div>
 
-    <p class="prompt">exit</p>
-    <p>logging off<span class="blink">_</span></p>
+        <div id="panel" style="display:none">
+          <div class="grid" id="socialGrid">
+            <div class="social">
+              <div class="icon">R</div>
+              <div class="meta"><div class="title">Reddit</div><div class="handle">u/choutenshi</div></div>
+              <button class="btn-link" data-url="https://reddit.com/user/choutenshi">Open</button>
+            </div>
+
+            <div class="social">
+              <div class="icon">T</div>
+              <div class="meta"><div class="title">Twitter</div><div class="handle">@choutenzhi</div></div>
+              <button class="btn-link" data-url="https://twitter.com/choutenzhi">Open</button>
+            </div>
+
+            <div class="social">
+              <div class="icon">Y</div>
+              <div class="meta"><div class="title">YouTube</div><div class="handle">@Choutenshi</div></div>
+              <button class="btn-link" data-url="https://youtube.com/@Choutenshi">Open</button>
+            </div>
+
+            <div class="social">
+              <div class="icon">D</div>
+              <div class="meta"><div class="title">Discord</div><div class="handle">@choutenshi</div></div>
+              <button class="btn-link" id="discordBtn">Copy</button>
+            </div>
+
+            <div class="social">
+              <div class="icon">E</div>
+              <div class="meta"><div class="title">Email</div><div class="handle">choutenshi@proton.me</div></div>
+              <button class="btn-link" data-url="mailto:choutenshi@proton.me">Open</button>
+            </div>
+
+            <div class="social">
+              <div class="icon">G</div>
+              <div class="meta"><div class="title">GitHub</div><div class="handle">@choutenshi</div></div>
+              <button class="btn-link" data-url="https://github.com/choutenshi">Open</button>
+            </div>
+
+          </div>
+
+          <div style="display:flex;gap:8px;margin-top:12px;align-items:center">
+            <button class="btn-link" id="continueToBio">Continue</button>
+            <div style="font-size:13px;color:var(--muted)">Click a link to open it (opens in new tab). Otherwise press Continue to move on.</div>
+          </div>
+        </div>
+
+        <div id="bioPanel" style="display:none">
+          <div class="bio-box" id="bioBox">
+            <div class="bio-title">Biography</div>
+            <div class="bio-sub">Alvin — 16, high schooler. Likes chess, tech, and music. Boarding school student. More? Click to ask Mika.</div>
+          </div>
+        </div>
+
+        <footer class="help">If something looks off, you can edit the file. All links open in a new tab except the Discord button (copy).</footer>
+      </div>
+    </div>
   </div>
+
+  <script>
+    // state
+    const sprite = document.getElementById('sprite');
+    const chLine = document.getElementById('ch-line');
+    const choices = document.getElementById('choices');
+    const panel = document.getElementById('panel');
+    const bioPanel = document.getElementById('bioPanel');
+    const bioBox = document.getElementById('bioBox');
+
+    // safe image URLs — avoid using raw fragment (#) in literals that might confuse parsers.
+    // We encode the whole URL at runtime so the '#' becomes safe (%23) if present.
+    const spriteUrlDefault = encodeURI('https://bluearchive.wiki/wiki/File:Mika_(Sleeveless)_03.png#/media/File:Mika_(Sleeveless)_03.png');
+    const spriteUrlAlt     = encodeURI('https://bluearchive.wiki/wiki/File:Mika_(Sleeveless)_05.png#/media/File:Mika_(Sleeveless)_05.png');
+
+    // apply default sprite (using encoded URL)
+    try{
+      sprite.style.backgroundImage = 'url("' + spriteUrlDefault + '")';
+    }catch(e){
+      // fallback: minimal inline SVG so layout isn't broken
+      sprite.style.backgroundImage = 'url(data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="320" height="420"><rect width="100%" height="100%" fill="%23071824"/></svg>)';
+      console.error('Failed to set sprite background — using fallback SVG', e);
+    }
+
+    // choice handling
+    choices.addEventListener('click', (e)=>{
+      const action = e.target.getAttribute('data-action');
+      if(!action) return;
+      if(action==='social'){
+        // show social grid
+        panel.style.display='block';
+        // update line
+        chLine.textContent = "Here are his places. Click any to open. Don't worry, I won't let him run away.";
+      } else if(action==='bio'){
+        goToBio();
+      }
+    });
+
+    // social link buttons
+    document.querySelectorAll('#socialGrid .btn-link').forEach(btn=>{
+      btn.addEventListener('click', (ev)=>{
+        const url = btn.getAttribute('data-url');
+        if(url){
+          // open in new tab and keep current site
+          window.open(url, '_blank', 'noopener');
+        }
+      });
+    });
+
+    // discord copy
+    document.getElementById('discordBtn').addEventListener('click', ()=>{
+      if(navigator.clipboard){
+        navigator.clipboard.writeText('@choutenshi').then(()=>{
+          chLine.textContent = 'Discord handle copied. Don\'t lose it.';
+        }).catch(()=>{
+          alert('Copy this handle: @choutenshi');
+        });
+      }else{
+        alert('Copy this handle: @choutenshi');
+      }
+    });
+
+    // continue to bio
+    document.getElementById('continueToBio').addEventListener('click', ()=>{
+      goToBio();
+    });
+
+    function goToBio(){
+      panel.style.display='none';
+      bioPanel.style.display='block';
+      // change sprite to second image — encode URL to avoid literal '#' issues
+      try{
+        sprite.style.backgroundImage = 'url("' + spriteUrlAlt + '")';
+      }catch(e){
+        console.error('Failed to set alternate sprite background', e);
+      }
+
+      // set Mika's suspicious biography text
+      chLine.textContent = "Hmm... Alvin... He's 16, a Sensei who likes chess, tech and music. He writes and tinkers. He's younger than me, impressive right!! Why did you ask about him anyway.. he's mine!";
+    }
+
+    // clicking biography box also reveals more with a slight typewriter effect
+    bioBox.addEventListener('click', ()=>{
+      // type out slowly
+      const full = "He's 16, loves chess, tech, and music. He writes, codes, and sometimes disappears into late-night projects. Why did you ask about him anyway.. he's mine!";
+      chLine.textContent='';
+      let i=0;
+      const iv = setInterval(()=>{
+        if(i < full.length){
+          chLine.textContent += full.charAt(i);
+          i++;
+        } else {
+          clearInterval(iv);
+        }
+      },18);
+    });
+  </script>
 </body>
 </html>
