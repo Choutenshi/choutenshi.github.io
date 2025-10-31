@@ -1,1 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Choutenshi's Website</title>
+  <meta name="description" content="I'm not available rn so someone will guide you through the pages." />
+  <style>
+    :root{
+      --accent:#4aa3ff;
+      --dark:#071022;
+      --card:#0c1a2b;
+      --glass: rgba(255,255,255,0.06);
+      --muted: #9fb6d6;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    html,body{height:100%;}
+    body{
+      margin:0;
+      background-color:var(--dark);
+      background-image: url('images/BG_TrinityTerrace_Night.webp');
+      background-size:cover;
+      background-position:center;
+      background-attachment: fixed;
+      color: #eaf6ff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:2rem;
+    }
+    .container{
+      width:100%;
+      max-width:860px;
+      backdrop-filter: blur(6px) saturate(120%);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius:16px;
+      box-shadow: 0 8px 30px rgba(3,10,18,0.6);
+      overflow:hidden;
+      display:grid;
+      grid-template-columns: 220px 1fr;
+    }
+    .left{
+      padding:20px;
+      background: linear-gradient(180deg, rgba(74,163,255,0.06), rgba(10,30,60,0.06));
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      align-items:center;
+      justify-content:center;
+    }
+    .mika{
+      width:160px;
+      height:160px;
+      border-radius:14px;
+      background-image: url('images/Mika_(Sleeveless)_03.webp');
+      background-size:contain;
+      background-repeat:no-repeat;
+      background-position:center;
+      box-shadow: 0 6px 18px rgba(10,20,40,0.6), inset 0 -6px 20px rgba(0,0,0,0.25);
+    }
+    h1{font-size:1.1rem;margin:0;text-align:center}
+    .tag{font-size:0.85rem;color:var(--muted);}
+    .right{padding:28px 26px;}
+    .bio{background:var(--glass);padding:14px;border-radius:10px;color:#dff3ff;margin-bottom:18px;line-height:1.45}
+    .links{display:flex;flex-direction:column;gap:10px}
+    .link{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);text-decoration:none;color:inherit}
+    .link:hover{transform:translateY(-2px);transition:all .12s ease}
+    .icon{width:36px;height:36px;border-radius:8px;display:grid;place-items:center;background:linear-gradient(180deg,var(--accent), #237fd9);font-weight:700;color:white}
+    .small{font-size:0.9rem;color:#e8f7ff}
+    .muted{font-size:0.82rem;color:var(--muted)}
+    .footer{margin-top:18px;font-size:0.8rem;color:var(--muted)}
+    audio{position:fixed;bottom:14px;left:14px;width:220px;opacity:0.8;}
+    @media (max-width:720px){
+      .container{grid-template-columns:1fr;}
+      .left{order:2;padding:18px}
+      .right{order:1}
+      .mika{width:120px;height:120px}
+      audio{width:180px;bottom:10px;left:10px;}
+    }
+  </style>
+</head>
+<body>
+  <audio controls autoplay loop>
+    <source src="images/Track_21_Nor_Midnight_Trip.ogg" type="audio/ogg" />
+    Your browser does not support the audio element.
+  </audio>
+
+  <main class="container" role="main">
+    <aside class="left">
+      <div class="mika" aria-hidden="true"></div>
+      <h1>Choutenshi</h1>
+      <div class="tag">Blue Archive inspired • Sprite: Mika Misono</div>
+    </aside>
+
+    <section class="right">
+      <div class="bio" contenteditable="true" aria-label="Biography (editable)">
+       Hi! Alvin's not here rn so I will guide you through this page!! Here's his social media links if you want!
+      </div>
+
+      <nav class="links" aria-label="Social links">
+        <a class="link" href="https://reddit.com/u/Choutenz" target="_blank" rel="noopener noreferrer">
+          <div class="icon">R</div>
+          <div>
+            <div class="small">Reddit</div>
+            <div class="muted">u/Choutenz</div>
+          </div>
+        </a>
+
+        <a class="link" href="https://twitter.com/Choutenzhi" target="_blank" rel="noopener noreferrer">
+          <div class="icon">T</div>
+          <div>
+            <div class="small">Twitter</div>
+            <div class="muted">@Choutenzhi</div>
+          </div>
+        </a>
+
+        <a class="link" href="https://github.com/Choutenshi" target="_blank" rel="noopener noreferrer">
+          <div class="icon">G</div>
+          <div>
+            <div class="small">GitHub</div>
+            <div class="muted">@Choutenshi</div>
+          </div>
+        </a>
+
+        <a class="link" href="https://discord.com/users/1229732734855942147" target="_blank" rel="noopener noreferrer">
+          <div class="icon">D</div>
+          <div>
+            <div class="small">Discord</div>
+            <div class="muted">ID: 1229732734855942147</div>
+          </div>
+        </a>
+      </nav>
+
+      <div class="footer">Images and audio loaded from <code>/images</code> folder. The biography box is editable in-browser.</div>
+    </section>
+  </main>
+</body>
+</html>
 
