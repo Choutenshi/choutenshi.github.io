@@ -23,9 +23,6 @@
       opacity: 1;
       transition: opacity 0.5s ease;
     }
-    .fade-out {
-      opacity: 0;
-    }
     .sprite {
       width: 300px;
       height: auto;
@@ -45,27 +42,11 @@
       text-align: left;
       font-size: 1.05em;
       margin-bottom: 20px;
-      cursor: pointer;
       overflow-y: auto;
       max-height: 150px;
     }
     .dialogue-text {
       margin: 0;
-    }
-    .dialogue-arrow {
-      position: absolute;
-      bottom: 10px;
-      right: 20px;
-      width: 20px;
-      height: 20px;
-      border-right: 3px solid #fff;
-      border-bottom: 3px solid #fff;
-      transform: rotate(45deg);
-      animation: blink 1s infinite;
-    }
-    @keyframes blink {
-      0%,50%,100%{opacity:1;}
-      25%,75%{opacity:0;}
     }
     .choices {
       display: flex;
@@ -87,20 +68,6 @@
       background: #005A9C;
       transform: scale(1.05);
     }
-    .hidden { display: none; }
-    .bio-box {
-      background: rgba(0, 40, 100, 0.85);
-      border: 2px solid #007ACC;
-      padding: 20px;
-      width: 80%;
-      max-width: 600px;
-      text-align: left;
-      margin-top: 20px;
-      font-size: 1em;
-      line-height: 1.5em;
-      max-height: 200px;
-      overflow-y: auto;
-    }
   </style>
 </head>
 <body>
@@ -110,48 +77,22 @@
     <img class="sprite" src="images/def.webp" alt="Mika sprite">
     <div class="dialogue-box" id="dialogueBox1">
       <div class="dialogue-text" id="dialogue1"></div>
-      <div class="dialogue-arrow"></div>
     </div>
-    <div class="choices hidden" id="choices1">
+    <div class="choices" id="choices1">
       <button class="choice-button" onclick="goLink('https://www.reddit.com/user/Choutenz/')">Reddit (@Choutenz)</button>
       <button class="choice-button" onclick="goLink('https://twitter.com/choutenzhi')">Twitter (@choutenzhi)</button>
       <button class="choice-button" onclick="goLink('https://youtube.com/@Choutenshi')">YouTube (@Choutenshi)</button>
       <button class="choice-button" onclick="goLink('https://discord.com/users/choutenshi')">Discord (@choutenshi)</button>
       <button class="choice-button" onclick="goLink('mailto:choutenshi@proton.me')">Email</button>
       <button class="choice-button" onclick="goLink('https://github.com/choutenshi')">GitHub</button>
-      <button class="choice-button" onclick="goBio()">Biography</button>
-    </div>
-  </div>
-
-  <div class="container hidden" id="page2">
-    <img class="sprite" src="images/bio.webp" alt="Mika sleeveless sprite">
-    <div class="dialogue-box" id="dialogueBox2">
-      <div class="dialogue-text" id="dialogue2"></div>
-      <div class="dialogue-arrow"></div>
-    </div>
-    <div class="bio-box">
-      <p><strong>Alvin’s Biography:</strong></p>
-      <p>– He's.. a male. W-wait I can't read this correctly, hold on, user-chan! <br>
-         – It's stated here on the paper he gave me.. he loves chess! Yea that! And he currently has 1600ish elo on lichess. <br>
-         – He has a good taste on music too! Nirvana, MJ, Dewa 19, and uh.. Vocaloids songs?.. what is this.. vtuber covers?? A-ahh I read to much! Anyway! <br>
-         – He's.. a pianist too! Def a good pianist I'm sure, user-chan! <br>
-         – And uhh.. I can't read in this dim light.. He loves tech! Currently learning to code.. Oh and here it says he WAS able to code on many languages but uh.. <br>
-         – It clearly says 2 years ago.. I think he forgot most of the stuff now. <br>
-         – Started playing chess seriously in 2023, improved from 200 to 1800 Elo! Wait I skipped that one?.. <br>
-         – This is interesting! He's a writer and wrote 3 novels! In.. in 2022 that's.. that's not new. <br>
-         – His favourite person is.. <br>
-         – W-what is this?!! I read to muchh! That's it!! <br>
-      </p>
-      <p><em>Why do you wanna know about him anyway… he's mine!</em></p>
     </div>
   </div>
 
   <script>
     const page1Texts = [
-      "Sensei! Alvin isn't here right now!",
+      "User-chan! Alvin isn't here right now! I, Mika Misono will guide you!",
       "Tell me, where do you want to go?"
     ];
-    const page2Texts = ["…Here’s what I found about him."];
 
     function typeWriter(text, element, callback, speed=30){
       let i=0;
@@ -166,39 +107,23 @@
       }, speed);
     }
 
-    function playDialogueSequence(texts, elementId, onComplete){
+    function playDialogueSequence(texts, elementId){
       const el = document.getElementById(elementId);
       let index = 0;
-      function next(){
-        if(index<texts.length){
-          typeWriter(texts[index]+"\n", el, ()=>{});
+      function nextLine() {
+        if(index < texts.length){
+          typeWriter(texts[index] + "\n", el, () => {});
           index++;
-        } else {
-          el.parentElement.removeEventListener('click', next);
-          if(onComplete) onComplete();
+          setTimeout(nextLine, texts[index-1].length * 30 + 500);
         }
       }
-      el.parentElement.addEventListener('click', next);
-      next();
+      nextLine();
     }
 
-    // Start first page dialogue
-    playDialogueSequence(page1Texts, "dialogue1", ()=>{
-      document.getElementById('choices1').classList.remove('hidden');
-    });
+    // Start dialogue automatically
+    playDialogueSequence(page1Texts, "dialogue1");
 
     function goLink(url){ window.open(url,'_blank'); }
-
-    function goBio(){
-      const page1 = document.getElementById('page1');
-      const page2 = document.getElementById('page2');
-      page1.classList.add('fade-out');
-      setTimeout(()=>{
-        page1.classList.add('hidden');
-        page2.classList.remove('hidden');
-        playDialogueSequence(page2Texts, "dialogue2");
-      },500);
-    }
   </script>
 </body>
 </html>
