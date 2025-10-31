@@ -1,140 +1,204 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Choutenshi's Website</title>
-  <meta name="description" content="I'm not available rn so someone will guide you through the pages." />
+  <meta charset="UTF-8">
+  <title>Alvin’s Links</title>
   <style>
-    :root{
-      --accent:#4aa3ff;
-      --dark:#071022;
-      --card:#0c1a2b;
-      --glass: rgba(255,255,255,0.06);
-      --muted: #9fb6d6;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    body {
+      margin: 0;
+      padding: 0;
+      background: url('images/bg.webp') no-repeat center/cover;
+      font-family: 'Segoe UI', sans-serif;
+      color: #fff;
+      overflow: hidden;
     }
-    html,body{height:100%;}
-    body{
-      margin:0;
-      background-color:var(--dark);
-      background-image: url('images/BG_TrinityTerrace_Night.webp');
-      background-size:cover;
-      background-position:center;
-      background-attachment: fixed;
-      color: #eaf6ff;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:2rem;
+    .container {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      backdrop-filter: blur(4px);
+      opacity: 1;
+      transition: opacity 0.5s ease;
     }
-    .container{
-      width:100%;
-      max-width:860px;
-      backdrop-filter: blur(6px) saturate(120%);
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius:16px;
-      box-shadow: 0 8px 30px rgba(3,10,18,0.6);
-      overflow:hidden;
-      display:grid;
-      grid-template-columns: 220px 1fr;
+    .fade-out {
+      opacity: 0;
     }
-    .left{
-      padding:20px;
-      background: linear-gradient(180deg, rgba(74,163,255,0.06), rgba(10,30,60,0.06));
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      align-items:center;
-      justify-content:center;
+    .sprite {
+      width: 300px;
+      height: auto;
+      margin-bottom: 20px;
+      transition: transform 0.3s ease;
     }
-    .mika{
-      width:160px;
-      height:160px;
-      border-radius:14px;
-      background-image: url('images/Mika_(Sleeveless)_03.webp');
-      background-size:contain;
-      background-repeat:no-repeat;
-      background-position:center;
-      box-shadow: 0 6px 18px rgba(10,20,40,0.6), inset 0 -6px 20px rgba(0,0,0,0.25);
+    .sprite:hover {
+      transform: scale(1.05);
     }
-    h1{font-size:1.1rem;margin:0;text-align:center}
-    .tag{font-size:0.85rem;color:var(--muted);}
-    .right{padding:28px 26px;}
-    .bio{background:var(--glass);padding:14px;border-radius:10px;color:#dff3ff;margin-bottom:18px;line-height:1.45}
-    .links{display:flex;flex-direction:column;gap:10px}
-    .link{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);text-decoration:none;color:inherit}
-    .link:hover{transform:translateY(-2px);transition:all .12s ease}
-    .icon{width:36px;height:36px;border-radius:8px;display:grid;place-items:center;background:linear-gradient(180deg,var(--accent), #237fd9);font-weight:700;color:white}
-    .small{font-size:0.9rem;color:#e8f7ff}
-    .muted{font-size:0.82rem;color:var(--muted)}
-    .footer{margin-top:18px;font-size:0.8rem;color:var(--muted)}
-    audio{position:fixed;bottom:14px;left:14px;width:220px;opacity:0.8;}
-    @media (max-width:720px){
-      .container{grid-template-columns:1fr;}
-      .left{order:2;padding:18px}
-      .right{order:1}
-      .mika{width:120px;height:120px}
-      audio{width:180px;bottom:10px;left:10px;}
+    .dialogue-box {
+      position: relative;
+      background: rgba(0, 40, 100, 0.85);
+      border: 2px solid #007ACC;
+      padding: 20px;
+      width: 80%;
+      max-width: 600px;
+      text-align: left;
+      font-size: 1.05em;
+      margin-bottom: 20px;
+      cursor: pointer;
+      overflow-y: auto;
+      max-height: 150px;
+    }
+    .dialogue-text {
+      margin: 0;
+    }
+    .dialogue-arrow {
+      position: absolute;
+      bottom: 10px;
+      right: 20px;
+      width: 20px;
+      height: 20px;
+      border-right: 3px solid #fff;
+      border-bottom: 3px solid #fff;
+      transform: rotate(45deg);
+      animation: blink 1s infinite;
+    }
+    @keyframes blink {
+      0%,50%,100%{opacity:1;}
+      25%,75%{opacity:0;}
+    }
+    .choices {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+    .choice-button {
+      background: #007ACC;
+      border: none;
+      color: #fff;
+      padding: 12px 22px;
+      font-size: 1em;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: transform 0.2s, background 0.3s;
+    }
+    .choice-button:hover {
+      background: #005A9C;
+      transform: scale(1.05);
+    }
+    .hidden { display: none; }
+    .bio-box {
+      background: rgba(0, 40, 100, 0.85);
+      border: 2px solid #007ACC;
+      padding: 20px;
+      width: 80%;
+      max-width: 600px;
+      text-align: left;
+      margin-top: 20px;
+      font-size: 1em;
+      line-height: 1.5em;
+      max-height: 200px;
+      overflow-y: auto;
     }
   </style>
 </head>
 <body>
-  <audio controls autoplay loop>
-    <source src="images/Track_21_Nor_Midnight_Trip.ogg" type="audio/ogg" />
-    Your browser does not support the audio element.
-  </audio>
+  <audio autoplay loop src="images/track.ogg"></audio>
 
-  <main class="container" role="main">
-    <aside class="left">
-      <div class="mika" aria-hidden="true"></div>
-      <h1>Choutenshi</h1>
-      <div class="tag">Blue Archive inspired • Sprite: Mika Misono</div>
-    </aside>
+  <div class="container" id="page1">
+    <img class="sprite" src="images/def.webp" alt="Mika sprite">
+    <div class="dialogue-box" id="dialogueBox1">
+      <div class="dialogue-text" id="dialogue1"></div>
+      <div class="dialogue-arrow"></div>
+    </div>
+    <div class="choices hidden" id="choices1">
+      <button class="choice-button" onclick="goLink('https://www.reddit.com/user/Choutenz/')">Reddit (@Choutenz)</button>
+      <button class="choice-button" onclick="goLink('https://twitter.com/choutenzhi')">Twitter (@choutenzhi)</button>
+      <button class="choice-button" onclick="goLink('https://youtube.com/@Choutenshi')">YouTube (@Choutenshi)</button>
+      <button class="choice-button" onclick="goLink('https://discord.com/users/choutenshi')">Discord (@choutenshi)</button>
+      <button class="choice-button" onclick="goLink('mailto:choutenshi@proton.me')">Email</button>
+      <button class="choice-button" onclick="goLink('https://github.com/choutenshi')">GitHub</button>
+      <button class="choice-button" onclick="goBio()">Biography</button>
+    </div>
+  </div>
 
-    <section class="right">
-      <div class="bio" contenteditable="true" aria-label="Biography (editable)">
-       Hi! Alvin's not here rn so I will guide you through this page!! Here's his social media links if you want!
-      </div>
+  <div class="container hidden" id="page2">
+    <img class="sprite" src="images/bio.webp" alt="Mika sleeveless sprite">
+    <div class="dialogue-box" id="dialogueBox2">
+      <div class="dialogue-text" id="dialogue2"></div>
+      <div class="dialogue-arrow"></div>
+    </div>
+    <div class="bio-box">
+      <p><strong>Alvin’s Biography:</strong></p>
+      <p>– He's.. a male. W-wait I can't read this correctly, hold on, user-chan! <br>
+         – It's stated here on the paper he gave me.. he loves chess! Yea that! And he currently has 1600ish elo on lichess. <br>
+         – He has a good taste on music too! Nirvana, MJ, Dewa 19, and uh.. Vocaloids songs?.. what is this.. vtuber covers?? A-ahh I read to much! Anyway! <br>
+         – He's.. a pianist too! Def a good pianist I'm sure, user-chan! <br>
+         – And uhh.. I can't read in this dim light.. He loves tech! Currently learning to code.. Oh and here it says he WAS able to code on many languages but uh.. <br>
+         – It clearly says 2 years ago.. I think he forgot most of the stuff now. <br>
+         – Started playing chess seriously in 2023, improved from 200 to 1800 Elo! Wait I skipped that one?.. <br>
+         – This is interesting! He's a writer and wrote 3 novels! In.. in 2022 that's.. that's not new. <br>
+         – His favourite person is.. <br>
+         – W-what is this?!! I read to muchh! That's it!! <br>
+      </p>
+      <p><em>Why do you wanna know about him anyway… he's mine!</em></p>
+    </div>
+  </div>
 
-      <nav class="links" aria-label="Social links">
-        <a class="link" href="https://reddit.com/u/Choutenz" target="_blank" rel="noopener noreferrer">
-          <div class="icon">R</div>
-          <div>
-            <div class="small">Reddit</div>
-            <div class="muted">u/Choutenz</div>
-          </div>
-        </a>
+  <script>
+    const page1Texts = [
+      "Sensei! Alvin isn't here right now!",
+      "Tell me, where do you want to go?"
+    ];
+    const page2Texts = ["…Here’s what I found about him."];
 
-        <a class="link" href="https://twitter.com/Choutenzhi" target="_blank" rel="noopener noreferrer">
-          <div class="icon">T</div>
-          <div>
-            <div class="small">Twitter</div>
-            <div class="muted">@Choutenzhi</div>
-          </div>
-        </a>
+    function typeWriter(text, element, callback, speed=30){
+      let i=0;
+      const interval = setInterval(()=>{
+        element.innerHTML += text.charAt(i);
+        element.parentElement.scrollTop = element.parentElement.scrollHeight;
+        i++;
+        if(i>=text.length){
+          clearInterval(interval);
+          if(callback) callback();
+        }
+      }, speed);
+    }
 
-        <a class="link" href="https://github.com/Choutenshi" target="_blank" rel="noopener noreferrer">
-          <div class="icon">G</div>
-          <div>
-            <div class="small">GitHub</div>
-            <div class="muted">@Choutenshi</div>
-          </div>
-        </a>
+    function playDialogueSequence(texts, elementId, onComplete){
+      const el = document.getElementById(elementId);
+      let index = 0;
+      function next(){
+        if(index<texts.length){
+          typeWriter(texts[index]+"\n", el, ()=>{});
+          index++;
+        } else {
+          el.parentElement.removeEventListener('click', next);
+          if(onComplete) onComplete();
+        }
+      }
+      el.parentElement.addEventListener('click', next);
+      next();
+    }
 
-        <a class="link" href="https://discord.com/users/1229732734855942147" target="_blank" rel="noopener noreferrer">
-          <div class="icon">D</div>
-          <div>
-            <div class="small">Discord</div>
-            <div class="muted">ID: 1229732734855942147</div>
-          </div>
-        </a>
-      </nav>
+    // Start first page dialogue
+    playDialogueSequence(page1Texts, "dialogue1", ()=>{
+      document.getElementById('choices1').classList.remove('hidden');
+    });
 
-      <div class="footer">Images and audio loaded from <code>/images</code> folder. The biography box is editable in-browser.</div>
-    </section>
-  </main>
+    function goLink(url){ window.open(url,'_blank'); }
+
+    function goBio(){
+      const page1 = document.getElementById('page1');
+      const page2 = document.getElementById('page2');
+      page1.classList.add('fade-out');
+      setTimeout(()=>{
+        page1.classList.add('hidden');
+        page2.classList.remove('hidden');
+        playDialogueSequence(page2Texts, "dialogue2");
+      },500);
+    }
+  </script>
 </body>
 </html>
-
