@@ -27,8 +27,8 @@
       min-width:260px;
       background: rgba(255,255,255,0.6);
       border-radius:20px;
-      padding:24px;
-      display:flex;flex-direction:column;gap:18px;align-items:center;
+      padding:16px;
+      display:flex;flex-direction:column;gap:8px;align-items:center;
       backdrop-filter: blur(14px) saturate(120%);
       -webkit-backdrop-filter: blur(14px) saturate(120%);
       border:1px solid rgba(0,0,0,0.1);
@@ -44,29 +44,31 @@
       pointer-events:none;
     }
     .pfp{
-      width:140px;height:140px;border-radius:999px;overflow:hidden;border:3px solid rgba(0,0,0,0.12);
+      width:130px;height:130px;border-radius:999px;overflow:hidden;border:2px solid rgba(0,0,0,0.12);
       display:block;flex-shrink:0;background:#111;object-fit:cover;
     }
-    .name{text-align:center;margin-top:6px;}
-    .name h1{font-size:20px;margin-bottom:6px;font-weight:700;letter-spacing:0.2px;color:#000}
-    .name p{font-size:13px;margin:0;color:rgba(0,0,0,0.7)}
+    .name{text-align:center;margin-top:4px;}
+    .name h1{font-size:19px;margin-bottom:2px;font-weight:700;letter-spacing:0.2px;color:#000}
+    .name p{font-size:12px;margin:0;color:rgba(0,0,0,0.7)}
     .bio{
-      font-size:14px;line-height:1.45;color:#000;
-      padding:12px 6px;text-align:center;max-width:90%;
+      font-size:13px;line-height:1.35;color:#000;
+      padding:6px 4px;text-align:center;max-width:92%;
       background: linear-gradient(180deg, rgba(255,255,255,0.2), rgba(255,255,255,0.0));
-      border-radius:10px;
+      border-radius:8px;
     }
-    .socials{display:flex;flex-direction:column;gap:10px;width:100%;align-items:center;margin-top:auto;padding-bottom:14px}
+    .socials{
+      display:flex;flex-direction:column;gap:6px;width:100%;align-items:center;margin-top:auto;padding-bottom:8px
+    }
     .socials a{
-      width:86%;display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:12px;text-decoration:none;color:#000;
+      width:86%;display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:10px;text-decoration:none;color:#000;
       background: rgba(255,255,255,0.4);border:1px solid rgba(0,0,0,0.1);
       transition:transform .18s ease, background .18s ease;
     }
-    .socials a:hover{transform:translateY(-4px);background:rgba(255,255,255,0.6)}
+    .socials a:hover{transform:translateY(-3px);background:rgba(255,255,255,0.6)}
     .socials svg{width:20px;height:20px;flex-shrink:0;opacity:0.95;stroke:#000}
-    .socials .label{font-weight:600;font-size:14px;color:#000}
+    .socials .label{font-weight:600;font-size:13px;color:#000}
     @media (max-width:900px){
-      .glass-card{width:90vw;height:auto;max-width:720px;padding:20px}
+      .glass-card{width:90vw;height:auto;max-width:720px;padding:14px}
       body{padding:18px;background-attachment:scroll;}
     }
   </style>
@@ -84,12 +86,11 @@
       </div>
       <nav class="socials" aria-label="social links">
         <a href="https://twitter.com/@choutenzhi" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53A4.48 4.48 0 0 0 12 7v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53A4.48 4.48 0 0 0 12 7v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
           <span class="label">Twitter / X</span>
         </a>
         <a href="https://www.reddit.com/user/Choutenz/" target="_blank" rel="noopener noreferrer">
-          <!-- proper Reddit icon SVG path used here -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.5 14h-3v-3H9v3H7.5v-5H9v2h1v-2h1.5v2h1v-2H15v5h-1.5zM9 9.5c.83 0 1.5-.67 1.5-1.5S9.83 6.5 9 6.5 7.5 7.17 7.5 8.5 8.17 9.5 9 9.5zm6 0c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5-1.5.67-1.5 1.5.67 1.5 1.5z"></path></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.5 14h-3v-3H9v3H7.5v-5H9v2h1v-2h1.5v2h1v-2H15v5h-1.5zM9 9.5c.83 0 1.5-.67 1.5-1.5S9.83 6.5 9 6.5 7.5 7.17 7.5 8.5 8.17 9.5 9 9.5zm6 0c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5-1.5.67-1.5 1.5.67 1.5 1.5 1.5z"></path></svg>
           <span class="label">Reddit</span>
         </a>
         <a href="https://github.com/choutenshi" target="_blank" rel="noopener noreferrer">
@@ -97,22 +98,20 @@
           <span class="label">GitHub</span>
         </a>
         <a href="https://discord.com/users/1229732734855942147" target="_blank" rel="noopener noreferrer">
-          <!-- proper Discord icon SVG path used here -->
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.317 4.369a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.211.385-.444.897-.608 1.305-1.843-.276-3.68-.276-5.486 0-.163-.405-.405-.92-.617-1.305a.076.076 0 0 0-.079-.037A19.736 19.736 0 0 0 3.683 4.369a.069.069 0 0 0-.032.027C.533 9.045-.319 13.579.099 18.057a.082.082 0 0 0 .031.056c2.066 1.537 4.045 2.422 5.994 3.027a.077.077 0 0 0 .084-.027c.461-.63.873-1.297 1.226-1.995a.076.076 0 0 0-.041-.105c-.652-.247-1.274-.54-1.872-.867a.077.077 0 0 0-.044.009c-.128.048-.256.094-.384.14a.074.074 0 0 0-.033.104c.256.38.512.757.756 1.147a.076.076 0 0 0 .079.033c3.927-1.591 7.908-1.591 11.835 0a.077.077 0 0 0 .079-.033c.244-.387.5-.765.756-1.147a.074.074 0 0 0-.033-.104c-.126-.046-.254-.092-.381-.14a.077.077 0 0 0-.043-.009c-.598.327-1.222.62-1.874.867a.076.076 0 0 0-.041.105c.353.698.764 1.366 1.225 1.995a.077.077 0 0 0 .084.027c1.95-.605 3.94-1.49 6.006-3.027a.081.081 0 0 0 .031-.056c.5-5.177-.838-9.673-3.548-13.688a.074.074 0 0 0-.032-.027zM8.02 15.331c-1.182 0-2.156-1.085-2.156-2.419 0-1.333.954-2.418 2.156-2.418 1.21 0 2.155 1.085 2.156 2.418 0 1.334-.945 2.419-2.156 2.419zm7.974 0c-1.182 0-2.156-1.085-2.156-2.419 0-1.333.954-2.418 2.156-2.418 1.21 0 2.155 1.085 2.156 2.418 0 1.334-.946 2.419-2.156 2.419z"></path></svg>
           <span class="label">Discord</span>
         </a>
-        <!-- Additional clickable links -->
         <a href="https://steamcommunity.com/id/Choutenshi" target="_blank" rel="noopener noreferrer">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v.01M8 12a4 4 0 0 1 8 0"/></svg>
-          <span class="label">Steam: Choutenshi</span>
+          <span class="label">Steam</span>
         </a>
         <a href="mailto:choutenshi@proton.me">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 4l8 8l8-8"/></svg>
-          <span class="label">Email: choutenshi@proton.me</span>
+          <span class="label">Email</span>
         </a>
         <a href="https://www.youtube.com/@Choutenshii" target="_blank" rel="noopener noreferrer">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12a10 10 0 1 0-10 10 10 10 0 0 0 10-10zm-11 3v-6l5 3-5 3z"/></svg>
-          <span class="label">YouTube: @Choutenshii</span>
+          <span class="label">YouTube</span>
         </a>
       </nav>
     </aside>
