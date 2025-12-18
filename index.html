@@ -57,11 +57,18 @@
       position: absolute;
       top: 14px;
       right: 16px;
-      font-size: 11px;
-      line-height: 1.1;
+      font-size: 9px;
+      line-height: 1.05;
       color: var(--muted);
       opacity: 0.9;
       pointer-events: none;
+      max-width: 320px;
+      overflow: hidden;
+      white-space: pre;
+    }
+
+    @media (max-width: 720px) {
+      .miku { display: none; }
     }
 
     .chips {
@@ -127,7 +134,13 @@ hobbies: chess · tech · music
 aka: Choutenshi
 
 <span class="prompt">$</span> cat links.txt
-Youtube:
+Youtube: https://www.youtube.com/@Choutenshii
+GitHub: https://github.com/choutenshi
+Twitter: https://twitter.com/@choutenzhi
+Reddit: https://www.reddit.com/user/Choutenz/
+Discord: https://discord.com/users/1229732734855942147
+Steam: https://steamcommunity.com/id/Choutenshi
+Mail: mailto:choutenshi@proton.me
 </pre>
 
     <div class="chips">
@@ -135,9 +148,7 @@ Youtube:
       <div class="chip">pianist</div>
       <div class="chip">singer</div>
       <div class="chip">author</div>
-	  <div class="chip">choreographer</div>
-	  <div class="chip">polyglot</div>
-	  <div class="chip">chess gm</div>
+      <div class="chip">chess guy</div>
     </div>
 
     <div class="footer">maybe it's a dream, maybe nothing else is real. But it doesn't change a thing, if I tell u how I feel.</div>
