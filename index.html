@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta property="og:title" content="Choutenshi" />
   <meta property="og:description" content="My 'own' Linktree I guess." />
-  <meta property="og:image" content="https://i.pinimg.com/originals/5c/a5/79/5ca579ef2ba2e2f33618822bf0b08480.gif" />
+  <meta property="og:image" content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq4YY86h90MylT3Vv2btWpwIvI9q54OQncTA&s" />
   <meta property="og:url" content="https://choutenshi.github.io" />
   <meta property="og:type" content="website" />
   <title>Choutenshi's Website</title>
@@ -33,37 +33,15 @@
       justify-content: center;
       overflow: hidden;
     }
-    
-    .ascii-bg {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .ascii-sprite {
-      position: absolute;
-      white-space: pre;
-      font-size: 16px;
-      line-height: 1.1;
-      color: rgba(255,182,193,0.08);
-      animation: drift 18s linear infinite;
-    }
-
-    @keyframes drift {
-      from { transform: translate(0, 0); opacity: 0; }
-      5% { opacity: 1; }
-      to { transform: translate(-120vw, 120vh); opacity: 0; }
-    }
 
     .terminal {
   display: flex;
   flex-direction: row;
   position: relative;
   width: min(900px, 92vw);
-  background: linear-gradient(145deg, rgba(0,0,0,0.45), rgba(0,0,0,0.6)); /* gradient glass */
+  background: linear-gradient(145deg, rgba(0,0,0,0.45), rgba(0,0,0,0.6));
   border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 30px; /* squircle-ish */
+  border-radius: 30px;
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   box-shadow: inset 0 0 8px rgba(255,255,255,0.05), 0 12px 35px rgba(0,0,0,0.6);
@@ -118,47 +96,23 @@
       color: var(--muted);
     }
   </style>
-  <script>
-    const ASCII = `⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀˃̵ᴗ˂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀`;
-
-    const bg = () => document.querySelector('.ascii-bg');
-    function spawn() {
-      const el = document.createElement('pre');
-      el.className = 'ascii-sprite';
-      el.textContent = ASCII;
-      el.style.top = '-20vh';
-      el.style.left = '100vw';
-      el.style.animationDuration = (14 + Math.random()*10) + 's';
-      el.style.fontSize = (12 + Math.random()*4) + 'px';
-      bg().appendChild(el);
-      setTimeout(() => el.remove(), 22000);
-    }
-    setInterval(spawn, 900);
-    for (let i=0;i<12;i++) setTimeout(spawn, i*300);
-  </script>
 </head>
 <body>
-  <div class="ascii-bg" aria-hidden="true"></div>
-
-  <audio id="bgm" autoplay loop>
-    <source src="/images/bgm.ogg" type="audio/ogg">
-  </audio>
-
   <div class="terminal">
     <div class="content">
       <div class="header">Alvin "Izayoi" Abdul · Choutenshi</div>
 
       <pre><span class="prompt">$</span> whoami
 name: Alvin "Izayoi" Abdul
-status: high school student
+status: high school student, alive
 hobbies: chess · tech · music
 aka: Choutenshi
 
 <span class="prompt">$</span> cat links.txt
-Youtube: <a href="https://www.youtube.com/@Choutenshii" target="_blank">https://www.youtube.com/@Choutenshii</a>
-GitHub: <a href="https://github.com/choutenshi" target="_blank">https://github.com/choutenshi</a>
 Twitter: <a href="https://twitter.com/@choutenzhi" target="_blank">https://twitter.com/@choutenzhi</a>
 Reddit: <a href="https://www.reddit.com/user/Choutenz/" target="_blank">https://www.reddit.com/user/Choutenz/</a>
+Youtube: <a href="https://www.youtube.com/@Choutenshii" target="_blank">https://www.youtube.com/@Choutenshii</a>
+GitHub: <a href="https://github.com/choutenshi" target="_blank">https://github.com/choutenshi</a>
 Discord: <a href="https://discord.com/users/1229732734855942147" target="_blank">https://discord.com/users/1229732734855942147</a>
 Steam: <a href="https://steamcommunity.com/id/Choutenshi" target="_blank">https://steamcommunity.com/id/Choutenshi</a>
 Mail: <a href="mailto:choutenshi@proton.me" target="_blank">choutenshi@proton.me</a>
