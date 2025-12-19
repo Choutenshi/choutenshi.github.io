@@ -39,8 +39,8 @@
     .ascii-sprite {
       position: absolute;
       white-space: pre;
-      font-size: 8px;
-      line-height: 1.05;
+      font-size: 12px; /* bigger ASCII art */
+      line-height: 1.1;
       color: rgba(255,182,193,0.08);
       animation: drift 18s linear infinite;
     }
@@ -52,25 +52,42 @@
     }
 
     .terminal {
+      display: flex;
+      flex-direction: row;
       position: relative;
       width: min(900px, 92vw);
       background: var(--panel);
       border: 1px solid var(--border);
-      border-radius: 28px; /* apple-like squircle */
+      border-radius: 28px;
       backdrop-filter: blur(12px) saturate(180%);
       -webkit-backdrop-filter: blur(12px) saturate(180%);
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-      padding: 18px 20px 22px;
+      padding: 18px;
       z-index: 1;
       overflow: hidden;
     }
 
+    .terminal .content {
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .terminal .vinshi-frame {
+      flex: 1;
+      margin-left: 16px;
+      border-radius: 28px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
     .terminal img.vinshi {
       width: 100%;
-      height: auto;
-      border-radius: 28px;
+      height: 100%;
       object-fit: contain;
-      margin-bottom: 12px;
+      border-radius: 28px;
     }
 
     .header {
@@ -123,7 +140,7 @@
       el.style.top = '-20vh';
       el.style.left = '100vw';
       el.style.animationDuration = (14 + Math.random()*10) + 's';
-      el.style.fontSize = (6 + Math.random()*4) + 'px';
+      el.style.fontSize = (12 + Math.random()*4) + 'px'; // bigger ASCII
       bg().appendChild(el);
       setTimeout(() => el.remove(), 22000);
     }
@@ -132,14 +149,13 @@
   </script>
 </head>
 <body>
+  <div class="ascii-bg" aria-hidden="true"></div>
+
   <div class="terminal">
-    <img src="/images/vinshi.jpg" alt="vinshi" class="vinshi" />
+    <div class="content">
+      <div class="header">Alvin "Izayoi" Abdul · Choutenshi</div>
 
-    <div class="ascii-bg" aria-hidden="true"></div>
-
-    <div class="header">Alvin "Izayoi" Abdul · Choutenshi</div>
-
-    <pre><span class="prompt">$</span> whoami
+      <pre><span class="prompt">$</span> whoami
 name: Alvin "Izayoi" Abdul
 status: high school student
 hobbies: chess · tech · music
@@ -155,17 +171,21 @@ Steam: <a href="https://steamcommunity.com/id/Choutenshi" target="_blank">https:
 Mail: <a href="mailto:choutenshi@proton.me" target="_blank">choutenshi@proton.me</a>
 </pre>
 
-    <div class="chips">
-      <div class="chip">programmer</div>
-      <div class="chip">pianist</div>
-      <div class="chip">singer</div>
-      <div class="chip">author</div>
-      <div class="chip">choreographer</div>
-      <div class="chip">polyglot</div>
-      <div class="chip">chess gm</div>
+      <div class="chips">
+        <div class="chip">programmer</div>
+        <div class="chip">pianist</div>
+        <div class="chip">singer</div>
+        <div class="chip">author</div>
+        <div class="chip">polyglot</div>
+        <div class="chip">chess gm</div>
+      </div>
+
+      <div class="footer">maybe it's a dream, maybe nothing else is real. But it doesn't change a thing, if I tell u how I feel.</div>
     </div>
 
-    <div class="footer">maybe it's a dream, maybe nothing else is real. But it doesn't change a thing, if I tell u how I feel.</div>
+    <div class="vinshi-frame">
+      <img src="/images/vinshi.jpg" alt="vinshi" class="vinshi" />
+    </div>
   </div>
 </body>
 </html>
