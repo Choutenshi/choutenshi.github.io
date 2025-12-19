@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-	<meta property="og:title" content="Choutenshi" />
+  <meta property="og:title" content="Choutenshi" />
   <meta property="og:description" content="My 'own' Linktree I guess." />
   <meta property="og:image" content="https://i.pinimg.com/originals/5c/a5/79/5ca579ef2ba2e2f33618822bf0b08480.gif" />
   <meta property="og:url" content="https://choutenshi.github.io" />
@@ -11,9 +11,9 @@
   <title>Choutenshi's Website</title>
   <style>
     :root {
-      --bg: #1a1b1f;
-      --panel: rgba(255,255,255,0.05);
-      --border: rgba(255,255,255,0.15);
+      --bg: #0d0d0d;
+      --panel: rgba(0,0,0,0.5); /* dark glass effect */
+      --border: rgba(255,255,255,0.1);
       --text: #ffe4ec;
       --muted: #ffb6c1;
       --accent: #ff8da0;
@@ -25,7 +25,7 @@
     body {
       margin: 0;
       min-height: 100vh;
-      background: #0d0d0d url('https://i.pinimg.com/originals/5c/a5/79/5ca579ef2ba2e2f33618822bf0b08480.gif') center/cover loop;
+      background: url('https://i.pinimg.com/originals/5c/a5/79/5ca579ef2ba2e2f33618822bf0b08480.gif') center/cover no-repeat;
       color: var(--text);
       font-family: var(--font);
       display: flex;
@@ -57,20 +57,21 @@
     }
 
     .terminal {
-      display: flex;
-      flex-direction: row;
-      position: relative;
-      width: min(900px, 92vw);
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 28px;
-      backdrop-filter: blur(12px) saturate(180%);
-      -webkit-backdrop-filter: blur(12px) saturate(180%);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-      padding: 18px;
-      z-index: 1;
-      overflow: hidden;
-    }
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  width: min(900px, 92vw);
+  background: linear-gradient(145deg, rgba(0,0,0,0.45), rgba(0,0,0,0.6)); /* gradient glass */
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 30px; /* squircle-ish */
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: inset 0 0 8px rgba(255,255,255,0.05), 0 12px 35px rgba(0,0,0,0.6);
+  padding: 18px;
+  z-index: 1;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
 
     .terminal .content {
       flex: 2;
@@ -128,7 +129,7 @@
       el.style.top = '-20vh';
       el.style.left = '100vw';
       el.style.animationDuration = (14 + Math.random()*10) + 's';
-      el.style.fontSize = (12 + Math.random()*4) + 'px'; // bigger ASCII
+      el.style.fontSize = (12 + Math.random()*4) + 'px';
       bg().appendChild(el);
       setTimeout(() => el.remove(), 22000);
     }
@@ -138,9 +139,11 @@
 </head>
 <body>
   <div class="ascii-bg" aria-hidden="true"></div>
-  <audio id="bgm" loop>
-  <source src="/images/bgm.ogg" type="audio/ogg">
-</audio>
+
+  <audio id="bgm" autoplay loop>
+    <source src="/images/bgm.ogg" type="audio/ogg">
+  </audio>
+
   <div class="terminal">
     <div class="content">
       <div class="header">Alvin "Izayoi" Abdul · Choutenshi</div>
@@ -171,5 +174,7 @@ Mail: <a href="mailto:choutenshi@proton.me" target="_blank">choutenshi@proton.me
       </div>
 
       <div class="footer">maybe it's a dream, maybe nothing else is real. But it doesn't change a thing, if I tell u how I feel.</div>
+    </div>
+  </div>
 </body>
 </html>
