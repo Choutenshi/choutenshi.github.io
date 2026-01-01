@@ -3,22 +3,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta property="og:title" content="Choutenshi" />
-  <meta property="og:description" content="My 'own' Linktree I guess." />
-  <meta property="og:image" content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq4YY86h90MylT3Vv2btWpwIvI9q54OQncTA&s" />
-  <meta property="og:url" content="https://choutenshi.github.io" />
-  <meta property="og:type" content="website" />
   <title>Choutenshi's Website</title>
   <link rel="icon" type="image/jpeg" href="/images/real.jpg">
   <style>
     :root {
-      --bg: #0d0d0d;
-      --glass: rgba(20, 20, 25, 0.4);
-      --border: rgba(255, 255, 255, 0.15);
+      --bg: #050505;
+      --glass: rgba(10, 10, 12, 0.75); /* Darker for better contrast */
+      --border: rgba(255, 255, 255, 0.1);
       --text: #ffe4ec;
       --muted: #ffb6c1;
       --accent: #ff8da0;
-      --accent-glow: rgba(255, 141, 160, 0.5);
+      --accent-glow: rgba(255, 141, 160, 0.6);
       --font: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     }
 
@@ -37,97 +32,81 @@
       position: relative;
     }
 
-    /* Osu! Style Parallax Background */
+    /* 1. GPU Accelerated Parallax Layer */
     #bg-layer {
-      position: absolute;
+      position: fixed;
       top: -5%;
       left: -5%;
       width: 110%;
       height: 110%;
-      background: url('https://i.pinimg.com/originals/5c/a5/79/5ca579ef2ba2e2f33618822bf0b08480.gif') center/cover no-repeat;
+      background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+                  url('https://i.pinimg.com/originals/5c/a5/79/5ca579ef2ba2e2f33618822bf0b08480.gif') center/cover no-repeat;
       z-index: 0;
-      transition: transform 0.1s linear;
+      will-change: transform; /* Hint to browser to use GPU */
     }
 
-    /* Subtle Matrix Rain Canvas */
+    /* 2. Optimized Matrix Canvas */
     #matrix-canvas {
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       z-index: 1;
-      opacity: 0.4; /* Very subtle */
+      opacity: 0.15; /* Subtle */
       pointer-events: none;
     }
 
-    /* CRT Scanline Overlay */
+    /* 3. CRT Scanlines */
     body::after {
-      content: " ";
-      display: block;
-      position: absolute;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+      background-size: 100% 4px;
       z-index: 10;
-      background-size: 100% 2px, 3px 100%;
       pointer-events: none;
     }
 
-    /* Enhanced Glassmorphism Terminal */
+    /* 4. Glassmorphism Terminal */
     .terminal {
-      display: flex;
-      flex-direction: row;
       position: relative;
-      width: min(900px, 92vw);
-      /* "Apple Touch" - smoother gradients, higher blur */
-      background: rgba(15, 15, 20, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-top: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 24px;
-      backdrop-filter: blur(25px) saturate(120%);
-      -webkit-backdrop-filter: blur(25px) saturate(120%);
-      box-shadow: 
-        0 20px 40px rgba(0,0,0,0.4), 
-        inset 0 0 0 1px rgba(255,255,255,0.05);
-      padding: 24px;
+      width: min(850px, 90vw);
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      backdrop-filter: blur(16px); /* Reduced slightly for performance */
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+      padding: 30px;
       z-index: 5;
-      overflow: hidden;
-      transition: transform 0.2s ease;
-    }
-
-    .terminal .content {
-      flex: 2;
       display: flex;
       flex-direction: column;
     }
-    
+
     .header {
       font-size: 13px;
       color: var(--muted);
-      margin-bottom: 12px;
-      opacity: 0.8;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+      margin-bottom: 20px;
       padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      opacity: 0.8;
+    }
+
+    /* Typewriter Container */
+    #terminal-body {
+      font-size: 14px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      min-height: 200px; /* Pre-reserve space */
     }
 
     .prompt { 
-      color: var(--accent); 
-      text-shadow: 0 0 5px var(--accent-glow);
+      color: var(--accent);
+      margin-right: 8px;
     }
 
-    /* Container for the Typewriter Effect */
-    #typewriter-container {
-      margin: 0;
-      font-size: 14px;
-      line-height: 1.6;
-      white-space: pre-wrap;
-      min-height: 280px; /* Prevent layout jump */
-    }
-
-    /* Link Hover Effects */
+    /* Link Styles */
     a { 
       color: var(--text); 
       text-decoration: none; 
@@ -139,62 +118,62 @@
     a:hover { 
       color: var(--accent);
       border-bottom: 1px solid var(--accent);
-      text-shadow: 0 0 8px var(--accent-glow);
+      text-shadow: 0 0 10px var(--accent-glow);
       transform: translateY(-2px);
     }
 
+    /* Skills Chips */
     .chips {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-top: 20px;
-      opacity: 0; /* Hidden initially for animation */
-      animation: fadeIn 1s ease forwards 3s; /* Delays appearance */
-    }
-
-    @keyframes fadeIn {
-      to { opacity: 1; }
+      margin-top: 25px;
+      opacity: 0; /* Hidden until typing is done */
+      transition: opacity 1s ease;
     }
 
     .chip {
-      background: rgba(255, 255, 255, 0.03);
+      background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--border);
-      padding: 6px 14px;
-      border-radius: 20px;
+      padding: 5px 12px;
+      border-radius: 15px;
       font-size: 12px;
       color: var(--muted);
       transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       cursor: default;
     }
 
-    /* Chip Hover Float & Glow */
     .chip:hover {
       background: rgba(255, 141, 160, 0.15);
       border-color: var(--accent);
-      color: #fff;
-      transform: translateY(-5px) scale(1.05);
-      box-shadow: 0 5px 15px rgba(255, 141, 160, 0.3);
+      color: white;
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 5px 15px rgba(255, 141, 160, 0.2);
     }
 
     .footer {
-      margin-top: 20px;
-      font-size: 12px;
+      margin-top: 25px;
+      font-size: 11px;
       color: rgba(255,255,255,0.3);
       text-align: center;
       opacity: 0;
-      animation: fadeIn 1s ease forwards 3.5s;
+      transition: opacity 1s ease 0.5s;
     }
 
-    /* Blinking Cursor for Typewriter */
+    /* Blinking Cursor */
     .cursor::after {
       content: '▋';
       color: var(--accent);
-      animation: blink 1s infinite;
+      animation: blink 1s step-end infinite;
+      margin-left: 2px;
     }
     @keyframes blink { 50% { opacity: 0; } }
-    
-    /* Hidden source for typewriter */
-    #source-text { display: none; }
+
+    .fade-in { opacity: 1 !important; }
+
+    /* Utilities */
+    .line { margin-bottom: 4px; display: block; }
+    .link-line { margin-bottom: 6px; display: block; }
   </style>
 </head>
 <body>
@@ -204,147 +183,196 @@
   <canvas id="matrix-canvas"></canvas>
 
   <div class="terminal">
-    <div class="content">
-      <div class="header">Alvin "Izayoi" Abdul · Choutenshi</div>
+    <div class="header">Alvin "Izayoi" Abdul · Choutenshi</div>
 
-      <pre id="typewriter-container"></pre>
+    <div id="terminal-body"></div>
 
-      <div id="source-text">
-<span class="prompt">$</span> whoami
-name: Alvin "Izayoi" Abdul
-status: high school student, alive
-hobbies: chess · tech · music
-aka: Choutenshi
-
-<span class="prompt">$</span> cat links.txt
-Twitter: <a href="https://twitter.com/@choutenzhi" target="_blank">@choutenzhi</a>
-Reddit:  <a href="https://www.reddit.com/user/Choutenz/" target="_blank">u/Choutenz</a>
-Youtube: <a href="https://www.youtube.com/@Choutenshii" target="_blank">@Choutenshii</a>
-GitHub:  <a href="https://github.com/choutenshi" target="_blank">@choutenshi</a>
-Discord: <a href="https://discord.gg/WNNrdNFztG" target="_blank">Invite</a>
-Steam:   <a href="https://steamcommunity.com/id/Choutenshi" target="_blank">id/Choutenshi</a>
-Mail:    <a href="mailto:choutenshi@proton.me" target="_blank">choutenshi@proton.me</a>
-      </div>
-
-      <div class="chips">
-        <div class="chip">programmer</div>
-        <div class="chip">pianist</div>
-        <div class="chip">singer</div>
-        <div class="chip">author</div>
-        <div class="chip">polyglot</div>
-        <div class="chip">chess gm</div>
-      </div>
-
-      <div class="footer">maybe it's a dream, maybe nothing else is real. But it doesn't change a thing, if I tell u how I feel.</div>
+    <div class="chips" id="chips-area">
+      <div class="chip">programmer</div>
+      <div class="chip">pianist</div>
+      <div class="chip">singer</div>
+      <div class="chip">author</div>
+      <div class="chip">polyglot</div>
+      <div class="chip">chess gm</div>
     </div>
+
+    <div class="footer" id="footer-area">maybe it's a dream, maybe nothing else is real. But it doesn't change a thing, if I tell u how I feel.</div>
   </div>
 
 <script>
-  /* --- 1. OSU! Style Parallax Effect --- */
+  /* --- 1. Efficient Parallax --- */
   const bg = document.getElementById('bg-layer');
+  let mouseX = 0, mouseY = 0;
+  
+  // Update mouse position on event
   document.addEventListener('mousemove', (e) => {
-    const x = e.clientX / window.innerWidth;
-    const y = e.clientY / window.innerHeight;
-    
-    // Move background slightly opposite to mouse
-    bg.style.transform = `translate(-${x * 20}px, -${y * 20}px)`;
+    mouseX = e.clientX;
+    mouseY = e.clientY;
   });
 
-  /* --- 2. Subtle Matrix Rain (0s and 1s) --- */
+  // Use requestAnimationFrame for smooth visual updates without lag
+  function updateParallax() {
+    const x = (window.innerWidth - mouseX) * 0.02;
+    const y = (window.innerHeight - mouseY) * 0.02;
+    bg.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+    requestAnimationFrame(updateParallax);
+  }
+  updateParallax();
+
+  /* --- 2. Throttled Matrix Rain (Performance Fix) --- */
   const canvas = document.getElementById('matrix-canvas');
   const ctx = canvas.getContext('2d');
+  
+  let width, height, columns, drops;
 
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-
-  const characters = "01";
-  const fontSize = 14;
-  const columns = canvas.width / fontSize;
-  const drops = [];
-
-  // Initialize drops randomly to make it look organic
-  for(let x = 0; x < columns; x++) {
-    drops[x] = Math.random() * canvas.height; 
+  function resize() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+    columns = Math.floor(width / 20);
+    drops = Array(columns).fill(0);
   }
+  window.addEventListener('resize', resize);
+  resize();
 
-  function drawMatrix() {
-    // Clear with very transparent black to create trails
-    ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  // Control FPS to reduce CPU load
+  let lastDraw = 0;
+  const fpsInterval = 1000 / 24; // 24 FPS is cinematic and light
 
-    ctx.fillStyle = "#ff8da0"; // Your accent color
-    ctx.font = fontSize + "px monospace";
+  function drawMatrix(timestamp) {
+    requestAnimationFrame(drawMatrix);
+    
+    const elapsed = timestamp - lastDraw;
+    if (elapsed < fpsInterval) return;
+    
+    lastDraw = timestamp - (elapsed % fpsInterval);
 
-    for(let i = 0; i < drops.length; i++) {
-      // Only draw some characters to keep it subtle (random check)
-      if (Math.random() > 0.95) {
-        const text = characters.charAt(Math.floor(Math.random() * characters.length));
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+    ctx.fillStyle = 'rgba(5, 5, 5, 0.1)'; // Trail fade
+    ctx.fillRect(0, 0, width, height);
+    
+    ctx.fillStyle = '#ff8da0'; // Accent color
+    ctx.font = '12px monospace';
+
+    for (let i = 0; i < drops.length; i++) {
+      // Randomly skip columns for "sparse" look
+      if(Math.random() > 0.98) {
+         const text = Math.floor(Math.random() * 2); // 0 or 1
+         const x = i * 20;
+         const y = drops[i] * 20;
+         ctx.fillText(text, x, y);
       }
       
-      if(drops[i] * fontSize > canvas.height && Math.random() > 0.975)
+      if (drops[i] * 20 > height && Math.random() > 0.975) {
         drops[i] = 0;
-      
+      }
       drops[i]++;
     }
   }
-  // Low frame rate for "retro" feel
-  setInterval(drawMatrix, 50);
+  requestAnimationFrame(drawMatrix);
 
-  window.addEventListener('resize', () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  });
-
-  /* --- 3. Typewriter Effect (Preserving HTML) --- */
-  const source = document.getElementById('source-text');
-  const target = document.getElementById('typewriter-container');
+  /* --- 3. Stuttering Typewriter & Raw Links --- */
   
-  // Split source by newlines to type line by line
-  // We grab innerHTML so links are preserved
-  const lines = source.innerHTML.split('\n');
-  let lineIndex = 0;
+  // Data Structure
+  const commands = [
+    { type: 'cmd', text: 'whoami' },
+    { type: 'text', text: 'name: Alvin "Izayoi" Abdul' },
+    { type: 'text', text: 'status: high school student, alive' },
+    { type: 'text', text: 'hobbies: chess · tech · music' },
+    { type: 'text', text: 'aka: Choutenshi' },
+    { type: 'br' },
+    { type: 'cmd', text: 'cat links.txt' },
+    { type: 'link', url: 'https://twitter.com/@choutenzhi' },
+    { type: 'link', url: 'https://www.reddit.com/user/Choutenz/' },
+    { type: 'link', url: 'https://www.youtube.com/@Choutenshii' },
+    { type: 'link', url: 'https://github.com/choutenshi' },
+    { type: 'link', url: 'https://discord.gg/WNNrdNFztG' },
+    { type: 'link', url: 'https://steamcommunity.com/id/Choutenshi' },
+    { type: 'link', url: 'mailto:choutenshi@proton.me' }
+  ];
 
-  function typeLine() {
-    if (lineIndex < lines.length) {
-      const lineContent = lines[lineIndex];
-      const div = document.createElement('div');
-      
-      // If line contains HTML (links), append instantly to preserve functionality
-      // If plain text, simulate typing
-      if (lineContent.includes('<')) {
-        div.innerHTML = lineContent;
-        target.appendChild(div);
-        lineIndex++;
-        setTimeout(typeLine, 150); // Fast delay for links
-      } else {
-        target.appendChild(div);
-        let charIndex = 0;
-        div.classList.add('cursor'); // Add cursor to current line
-        
-        function typeChar() {
-          if (charIndex < lineContent.length) {
-            div.textContent += lineContent.charAt(charIndex);
-            charIndex++;
-            setTimeout(typeChar, 20); // Typing speed
-          } else {
-            div.classList.remove('cursor');
-            lineIndex++;
-            setTimeout(typeLine, 50);
-          }
-        }
-        typeChar();
-      }
-    } else {
-      // Done typing - Add blinking cursor at the very end
-      const cursor = document.createElement('span');
-      cursor.className = 'cursor';
-      target.appendChild(cursor);
+  const terminal = document.getElementById('terminal-body');
+  const chips = document.getElementById('chips-area');
+  const footer = document.getElementById('footer-area');
+
+  let cmdIndex = 0;
+
+  function typeWriter() {
+    if (cmdIndex >= commands.length) {
+      // Finished all lines - show Chips and Footer
+      chips.classList.add('fade-in');
+      footer.classList.add('fade-in');
+      return;
     }
+
+    const item = commands[cmdIndex];
+    const div = document.createElement('div');
+    
+    // Add Prompt for commands
+    if (item.type === 'cmd') {
+      const promptSpan = document.createElement('span');
+      promptSpan.className = 'prompt';
+      promptSpan.textContent = '$ ';
+      div.appendChild(promptSpan);
+      div.className = 'line';
+    } else if (item.type === 'link') {
+      div.className = 'link-line';
+    } else {
+      div.className = 'line';
+    }
+    
+    terminal.appendChild(div);
+
+    // If it's a line break, just move on
+    if (item.type === 'br') {
+      div.innerHTML = '&nbsp;';
+      cmdIndex++;
+      setTimeout(typeWriter, 100);
+      return;
+    }
+
+    // Prepare content to type
+    let content = item.type === 'link' ? item.url : item.text;
+    let charIndex = 0;
+    
+    // If it's a link, we need an <a> tag
+    let textNodeContainer = div;
+    if (item.type === 'link') {
+      const a = document.createElement('a');
+      a.href = item.url;
+      a.target = "_blank";
+      div.appendChild(a);
+      textNodeContainer = a;
+    }
+
+    // Add cursor to the active line
+    div.classList.add('cursor');
+
+    function typeChar() {
+      if (charIndex < content.length) {
+        textNodeContainer.textContent += content.charAt(charIndex);
+        charIndex++;
+        
+        // Humanize Typing: Stuttering logic
+        let delay = Math.random() * 50 + 30; // Base speed (30-80ms)
+        
+        // 10% chance of "thinking" pause
+        if (Math.random() < 0.1) delay += 150; 
+        // 5% chance of "burst" speed (fast typing)
+        if (Math.random() < 0.05) delay = 10; 
+
+        setTimeout(typeChar, delay);
+      } else {
+        // Line finished
+        div.classList.remove('cursor');
+        cmdIndex++;
+        setTimeout(typeWriter, 150); // Pause before next line
+      }
+    }
+    
+    typeChar();
   }
 
-  // Start typing after page load
-  setTimeout(typeLine, 500);
+  // Start initialization
+  setTimeout(typeWriter, 800);
 
 </script>
 </body>
