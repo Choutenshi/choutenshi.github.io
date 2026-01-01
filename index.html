@@ -8,17 +8,18 @@
   <meta property="og:image" content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq4YY86h90MylT3Vv2btWpwIvI9q54OQncTA&s" />
   <meta property="og:url" content="https://choutenshi.github.io" />
   <meta property="og:type" content="website" />
-  <title>Choutenshi's Website</title>
+  <title>Choutenshi // Terminal</title>
   <link rel="icon" type="image/jpeg" href="/images/real.jpg">
   <style>
     :root {
       --bg: #0d0d0d;
-      --panel: rgba(0,0,0,0.5); /* dark glass effect */
-      --border: rgba(255,255,255,0.1);
+      --panel: rgba(10, 10, 15, 0.75);
+      --border: rgba(255, 255, 255, 0.15);
       --text: #ffe4ec;
       --muted: #ffb6c1;
-      --accent: #ff8da0;
-      --font: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      --accent: #ff7eb6;
+      --accent-glow: rgba(255, 126, 182, 0.5);
+      --font: 'Courier New', Courier, monospace;
     }
 
     * { box-sizing: border-box; }
@@ -26,7 +27,8 @@
     body {
       margin: 0;
       min-height: 100vh;
-      background: url('https://i.pinimg.com/originals/5c/a5/79/5ca579ef2ba2e2f33618822bf0b08480.gif') center/cover no-repeat;
+      /* Added an overlay to the background image for better text readability */
+      background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://i.pinimg.com/originals/5c/a5/79/5ca579ef2ba2e2f33618822bf0b08480.gif') center/cover no-repeat;
       color: var(--text);
       font-family: var(--font);
       display: flex;
@@ -35,101 +37,237 @@
       overflow: hidden;
     }
 
-    .terminal {
-  display: flex;
-  flex-direction: row;
-  position: relative;
-  width: min(900px, 92vw);
-  background: linear-gradient(145deg, rgba(0,0,0,0.45), rgba(0,0,0,0.6));
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 30px;
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  box-shadow: inset 0 0 8px rgba(255,255,255,0.05), 0 12px 35px rgba(0,0,0,0.6);
-  padding: 18px;
-  z-index: 1;
-  overflow: hidden;
-  transition: all 0.3s ease;
-}
+    /* CRT Scanline Effect Overlay */
+    body::after {
+      content: " ";
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+      z-index: 2;
+      background-size: 100% 2px, 3px 100%;
+      pointer-events: none;
+    }
 
-    .terminal .content {
-      flex: 2;
+    .terminal {
+      position: relative;
+      width: min(850px, 92vw);
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 0 40px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.05);
+      padding: 2rem;
+      z-index: 3;
+      transform: translateY(20px);
+      opacity: 0;
+      animation: slideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    }
+
+    @keyframes slideUp {
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .header {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Glitch effect for the name */
+    .glitch-name {
+      font-weight: bold;
+      position: relative;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 2px;
     }
     
-    .header {
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 12px;
+    .glitch-name:hover {
+      animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
     }
 
-    .prompt { color: var(--accent); }
+    @keyframes glitch {
+      0% { transform: translate(0) }
+      20% { transform: translate(-2px, 2px) }
+      40% { transform: translate(-2px, -2px) }
+      60% { transform: translate(2px, 2px) }
+      80% { transform: translate(2px, -2px) }
+      100% { transform: translate(0) }
+    }
 
-    pre {
-      margin: 0;
-      font-size: 14px;
-      line-height: 1.6;
+    .prompt { 
+      color: var(--accent); 
+      margin-right: 8px;
+      font-weight: bold;
+      text-shadow: 0 0 5px var(--accent-glow);
+    }
+
+    .command-line {
+      margin-bottom: 15px;
+    }
+
+    /* Typer container styles */
+    .typewriter-text {
       white-space: pre-wrap;
+      line-height: 1.6;
+      font-size: 15px;
+    }
+    
+    /* Hide content initially for JS typing */
+    .hidden-content {
+      display: none;
     }
 
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    /* Blinking cursor */
+    .cursor::after {
+      content: '█';
+      animation: blink 1s step-end infinite;
+      color: var(--accent);
+      margin-left: 5px;
+    }
+
+    @keyframes blink { 50% { opacity: 0; } }
+
+    a { 
+      color: var(--text); 
+      text-decoration: none; 
+      border-bottom: 1px dotted var(--muted);
+      transition: all 0.2s ease;
+    }
+    
+    a:hover { 
+      color: var(--accent);
+      background: rgba(255, 126, 182, 0.1);
+      border-bottom: 1px solid var(--accent);
+      text-shadow: 0 0 8px var(--accent-glow);
+    }
 
     .chips {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 12px;
+      gap: 10px;
+      margin-top: 25px;
+      opacity: 0; /* Animated in via JS */
+      transition: opacity 1s ease;
     }
 
     .chip {
-      border: 1px dashed var(--border);
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-size: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 4px;
+      font-size: 13px;
       color: var(--muted);
+      transition: all 0.3s ease;
+      cursor: default;
+    }
+
+    .chip:hover {
+      background: rgba(255, 126, 182, 0.15);
+      border-color: var(--accent);
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 126, 182, 0.2);
     }
 
     .footer {
-      margin-top: 14px;
+      margin-top: 30px;
       font-size: 12px;
-      color: var(--muted);
+      color: rgba(255,255,255,0.4);
+      border-top: 1px solid var(--border);
+      padding-top: 15px;
+      text-align: center;
+      font-style: italic;
     }
   </style>
 </head>
 <body>
   <div class="terminal">
-    <div class="content">
-      <div class="header">Alvin "Izayoi" Abdul · Choutenshi</div>
+    
+    <div class="header">
+      <span>usr@choutenshi:~</span>
+      <span class="glitch-name">CHOUTENSHI</span>
+    </div>
 
-      <pre><span class="prompt">$</span> whoami
+    <div id="terminal-body">
+      </div>
+    
+    <div id="source-data" class="hidden-content">
+<span class="prompt">$</span> whoami
 name: Alvin "Izayoi" Abdul
 status: high school student, alive
 hobbies: chess · tech · music
 aka: Choutenshi
 
 <span class="prompt">$</span> cat links.txt
-Twitter: <a href="https://twitter.com/@choutenzhi" target="_blank">https://twitter.com/@choutenzhi</a>
-Reddit: <a href="https://www.reddit.com/user/Choutenz/" target="_blank">https://www.reddit.com/user/Choutenz/</a>
-Youtube: <a href="https://www.youtube.com/@Choutenshii" target="_blank">https://www.youtube.com/@Choutenshii</a>
-GitHub: <a href="https://github.com/choutenshi" target="_blank">https://github.com/choutenshi</a>
-Discord: <a href="https://discord.gg/WNNrdNFztG" target="_blank">https://discord.gg/WNNrdNFztG</a>
-Steam: <a href="https://steamcommunity.com/id/Choutenshi" target="_blank">https://steamcommunity.com/id/Choutenshi</a>
-Mail: <a href="mailto:choutenshi@proton.me" target="_blank">choutenshi@proton.me</a>
-</pre>
-
-      <div class="chips">
-        <div class="chip">programmer</div>
-        <div class="chip">pianist</div>
-        <div class="chip">singer</div>
-        <div class="chip">author</div>
-        <div class="chip">polyglot</div>
-        <div class="chip">chess gm</div>
-      </div>
-
-      <div class="footer">maybe it's a dream, maybe nothing else is real. But it doesn't change a thing, if I tell u how I feel.</div>
+Twitter: <a href="https://twitter.com/@choutenzhi" target="_blank">@choutenzhi</a>
+Reddit:  <a href="https://www.reddit.com/user/Choutenz/" target="_blank">u/Choutenz</a>
+Youtube: <a href="https://www.youtube.com/@Choutenshii" target="_blank">@Choutenshii</a>
+GitHub:  <a href="https://github.com/choutenshi" target="_blank">@choutenshi</a>
+Discord: <a href="https://discord.gg/WNNrdNFztG" target="_blank">Server Invite</a>
+Steam:   <a href="https://steamcommunity.com/id/Choutenshi" target="_blank">id/Choutenshi</a>
+Mail:    <a href="mailto:choutenshi@proton.me" target="_blank">choutenshi@proton.me</a>
     </div>
+
+    <div class="chips" id="chips-container">
+      <div class="chip">programmer</div>
+      <div class="chip">pianist</div>
+      <div class="chip">singer</div>
+      <div class="chip">author</div>
+      <div class="chip">polyglot</div>
+      <div class="chip">chess gm</div>
+    </div>
+
+    <div class="footer">maybe it's a dream, maybe nothing else is real. But it doesn't change a thing, if I tell u how I feel.</div>
   </div>
+
+  <script>
+    // Simple script to simulate typing effect without destroying HTML tags
+    document.addEventListener("DOMContentLoaded", () => {
+      const source = document.getElementById("source-data");
+      const target = document.getElementById("terminal-body");
+      const chips = document.getElementById("chips-container");
+      
+      // We clone the nodes so we can append them one by one
+      const nodes = Array.from(source.childNodes);
+      
+      let i = 0;
+      
+      function typeNodes() {
+        if (i < nodes.length) {
+          const node = nodes[i];
+          const clone = node.cloneNode(true);
+          
+          // If it's a text node, we simulate typing (optional, but faster just to append lines for structure)
+          // For a cleaner look with links, we append elements instantly but with a slight delay per line
+          target.appendChild(clone);
+          
+          // Auto scroll to bottom
+          window.scrollTo(0, document.body.scrollHeight);
+          
+          i++;
+          // Randomize typing speed slightly
+          const delay = (node.nodeType === Node.TEXT_NODE && node.textContent.trim().length > 0) ? 30 : 10;
+          setTimeout(typeNodes, delay);
+        } else {
+          // Finished typing, show chips
+          target.classList.add("cursor"); // add blinking cursor at end
+          chips.style.opacity = "1";
+        }
+      }
+      
+      // Start typing after a small delay
+      setTimeout(typeNodes, 500);
+    });
+  </script>
 </body>
 </html>
