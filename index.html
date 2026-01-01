@@ -8,18 +8,18 @@
   <meta property="og:image" content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq4YY86h90MylT3Vv2btWpwIvI9q54OQncTA&s" />
   <meta property="og:url" content="https://choutenshi.github.io" />
   <meta property="og:type" content="website" />
-  <title>Choutenshi // Terminal</title>
+  <title>Choutenshi's Website</title>
   <link rel="icon" type="image/jpeg" href="/images/real.jpg">
   <style>
     :root {
       --bg: #0d0d0d;
-      --panel: rgba(10, 10, 15, 0.75);
+      --glass: rgba(20, 20, 25, 0.4);
       --border: rgba(255, 255, 255, 0.15);
       --text: #ffe4ec;
       --muted: #ffb6c1;
-      --accent: #ff7eb6;
-      --accent-glow: rgba(255, 126, 182, 0.5);
-      --font: 'Courier New', Courier, monospace;
+      --accent: #ff8da0;
+      --accent-glow: rgba(255, 141, 160, 0.5);
+      --font: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     }
 
     * { box-sizing: border-box; }
@@ -27,17 +27,41 @@
     body {
       margin: 0;
       min-height: 100vh;
-      /* Added an overlay to the background image for better text readability */
-      background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://i.pinimg.com/originals/5c/a5/79/5ca579ef2ba2e2f33618822bf0b08480.gif') center/cover no-repeat;
+      background-color: var(--bg);
       color: var(--text);
       font-family: var(--font);
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
+      position: relative;
     }
 
-    /* CRT Scanline Effect Overlay */
+    /* Osu! Style Parallax Background */
+    #bg-layer {
+      position: absolute;
+      top: -5%;
+      left: -5%;
+      width: 110%;
+      height: 110%;
+      background: url('https://i.pinimg.com/originals/5c/a5/79/5ca579ef2ba2e2f33618822bf0b08480.gif') center/cover no-repeat;
+      z-index: 0;
+      transition: transform 0.1s linear;
+    }
+
+    /* Subtle Matrix Rain Canvas */
+    #matrix-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      opacity: 0.4; /* Very subtle */
+      pointer-events: none;
+    }
+
+    /* CRT Scanline Overlay */
     body::after {
       content: " ";
       display: block;
@@ -46,162 +70,146 @@
       left: 0;
       bottom: 0;
       right: 0;
-      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-      z-index: 2;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+      z-index: 10;
       background-size: 100% 2px, 3px 100%;
       pointer-events: none;
     }
 
+    /* Enhanced Glassmorphism Terminal */
     .terminal {
-      position: relative;
-      width: min(850px, 92vw);
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      box-shadow: 0 0 40px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.05);
-      padding: 2rem;
-      z-index: 3;
-      transform: translateY(20px);
-      opacity: 0;
-      animation: slideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-    }
-
-    @keyframes slideUp {
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    .header {
-      font-size: 14px;
-      color: var(--muted);
-      margin-bottom: 20px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid var(--border);
       display: flex;
-      justify-content: space-between;
+      flex-direction: row;
+      position: relative;
+      width: min(900px, 92vw);
+      /* "Apple Touch" - smoother gradients, higher blur */
+      background: rgba(15, 15, 20, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 24px;
+      backdrop-filter: blur(25px) saturate(120%);
+      -webkit-backdrop-filter: blur(25px) saturate(120%);
+      box-shadow: 
+        0 20px 40px rgba(0,0,0,0.4), 
+        inset 0 0 0 1px rgba(255,255,255,0.05);
+      padding: 24px;
+      z-index: 5;
+      overflow: hidden;
+      transition: transform 0.2s ease;
     }
 
-    /* Glitch effect for the name */
-    .glitch-name {
-      font-weight: bold;
-      position: relative;
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 2px;
+    .terminal .content {
+      flex: 2;
+      display: flex;
+      flex-direction: column;
     }
     
-    .glitch-name:hover {
-      animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
-    }
-
-    @keyframes glitch {
-      0% { transform: translate(0) }
-      20% { transform: translate(-2px, 2px) }
-      40% { transform: translate(-2px, -2px) }
-      60% { transform: translate(2px, 2px) }
-      80% { transform: translate(2px, -2px) }
-      100% { transform: translate(0) }
+    .header {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 12px;
+      opacity: 0.8;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding-bottom: 10px;
     }
 
     .prompt { 
       color: var(--accent); 
-      margin-right: 8px;
-      font-weight: bold;
       text-shadow: 0 0 5px var(--accent-glow);
     }
 
-    .command-line {
-      margin-bottom: 15px;
-    }
-
-    /* Typer container styles */
-    .typewriter-text {
-      white-space: pre-wrap;
+    /* Container for the Typewriter Effect */
+    #typewriter-container {
+      margin: 0;
+      font-size: 14px;
       line-height: 1.6;
-      font-size: 15px;
-    }
-    
-    /* Hide content initially for JS typing */
-    .hidden-content {
-      display: none;
+      white-space: pre-wrap;
+      min-height: 280px; /* Prevent layout jump */
     }
 
-    /* Blinking cursor */
-    .cursor::after {
-      content: '█';
-      animation: blink 1s step-end infinite;
-      color: var(--accent);
-      margin-left: 5px;
-    }
-
-    @keyframes blink { 50% { opacity: 0; } }
-
+    /* Link Hover Effects */
     a { 
       color: var(--text); 
       text-decoration: none; 
       border-bottom: 1px dotted var(--muted);
       transition: all 0.2s ease;
+      display: inline-block;
     }
     
     a:hover { 
       color: var(--accent);
-      background: rgba(255, 126, 182, 0.1);
       border-bottom: 1px solid var(--accent);
       text-shadow: 0 0 8px var(--accent-glow);
+      transform: translateY(-2px);
     }
 
     .chips {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-top: 25px;
-      opacity: 0; /* Animated in via JS */
-      transition: opacity 1s ease;
+      margin-top: 20px;
+      opacity: 0; /* Hidden initially for animation */
+      animation: fadeIn 1s ease forwards 3s; /* Delays appearance */
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
     }
 
     .chip {
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--border);
       padding: 6px 14px;
-      border-radius: 4px;
-      font-size: 13px;
+      border-radius: 20px;
+      font-size: 12px;
       color: var(--muted);
-      transition: all 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       cursor: default;
     }
 
+    /* Chip Hover Float & Glow */
     .chip:hover {
-      background: rgba(255, 126, 182, 0.15);
+      background: rgba(255, 141, 160, 0.15);
       border-color: var(--accent);
       color: #fff;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(255, 126, 182, 0.2);
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 5px 15px rgba(255, 141, 160, 0.3);
     }
 
     .footer {
-      margin-top: 30px;
+      margin-top: 20px;
       font-size: 12px;
-      color: rgba(255,255,255,0.4);
-      border-top: 1px solid var(--border);
-      padding-top: 15px;
+      color: rgba(255,255,255,0.3);
       text-align: center;
-      font-style: italic;
+      opacity: 0;
+      animation: fadeIn 1s ease forwards 3.5s;
     }
+
+    /* Blinking Cursor for Typewriter */
+    .cursor::after {
+      content: '▋';
+      color: var(--accent);
+      animation: blink 1s infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+    
+    /* Hidden source for typewriter */
+    #source-text { display: none; }
   </style>
 </head>
 <body>
-  <div class="terminal">
-    
-    <div class="header">
-      <span>usr@choutenshi:~</span>
-      <span class="glitch-name">CHOUTENSHI</span>
-    </div>
 
-    <div id="terminal-body">
-      </div>
-    
-    <div id="source-data" class="hidden-content">
+  <div id="bg-layer"></div>
+  
+  <canvas id="matrix-canvas"></canvas>
+
+  <div class="terminal">
+    <div class="content">
+      <div class="header">Alvin "Izayoi" Abdul · Choutenshi</div>
+
+      <pre id="typewriter-container"></pre>
+
+      <div id="source-text">
 <span class="prompt">$</span> whoami
 name: Alvin "Izayoi" Abdul
 status: high school student, alive
@@ -213,61 +221,131 @@ Twitter: <a href="https://twitter.com/@choutenzhi" target="_blank">@choutenzhi</
 Reddit:  <a href="https://www.reddit.com/user/Choutenz/" target="_blank">u/Choutenz</a>
 Youtube: <a href="https://www.youtube.com/@Choutenshii" target="_blank">@Choutenshii</a>
 GitHub:  <a href="https://github.com/choutenshi" target="_blank">@choutenshi</a>
-Discord: <a href="https://discord.gg/WNNrdNFztG" target="_blank">Server Invite</a>
+Discord: <a href="https://discord.gg/WNNrdNFztG" target="_blank">Invite</a>
 Steam:   <a href="https://steamcommunity.com/id/Choutenshi" target="_blank">id/Choutenshi</a>
 Mail:    <a href="mailto:choutenshi@proton.me" target="_blank">choutenshi@proton.me</a>
-    </div>
+      </div>
 
-    <div class="chips" id="chips-container">
-      <div class="chip">programmer</div>
-      <div class="chip">pianist</div>
-      <div class="chip">singer</div>
-      <div class="chip">author</div>
-      <div class="chip">polyglot</div>
-      <div class="chip">chess gm</div>
-    </div>
+      <div class="chips">
+        <div class="chip">programmer</div>
+        <div class="chip">pianist</div>
+        <div class="chip">singer</div>
+        <div class="chip">author</div>
+        <div class="chip">polyglot</div>
+        <div class="chip">chess gm</div>
+      </div>
 
-    <div class="footer">maybe it's a dream, maybe nothing else is real. But it doesn't change a thing, if I tell u how I feel.</div>
+      <div class="footer">maybe it's a dream, maybe nothing else is real. But it doesn't change a thing, if I tell u how I feel.</div>
+    </div>
   </div>
 
-  <script>
-    // Simple script to simulate typing effect without destroying HTML tags
-    document.addEventListener("DOMContentLoaded", () => {
-      const source = document.getElementById("source-data");
-      const target = document.getElementById("terminal-body");
-      const chips = document.getElementById("chips-container");
-      
-      // We clone the nodes so we can append them one by one
-      const nodes = Array.from(source.childNodes);
-      
-      let i = 0;
-      
-      function typeNodes() {
-        if (i < nodes.length) {
-          const node = nodes[i];
-          const clone = node.cloneNode(true);
-          
-          // If it's a text node, we simulate typing (optional, but faster just to append lines for structure)
-          // For a cleaner look with links, we append elements instantly but with a slight delay per line
-          target.appendChild(clone);
-          
-          // Auto scroll to bottom
-          window.scrollTo(0, document.body.scrollHeight);
-          
-          i++;
-          // Randomize typing speed slightly
-          const delay = (node.nodeType === Node.TEXT_NODE && node.textContent.trim().length > 0) ? 30 : 10;
-          setTimeout(typeNodes, delay);
-        } else {
-          // Finished typing, show chips
-          target.classList.add("cursor"); // add blinking cursor at end
-          chips.style.opacity = "1";
-        }
+<script>
+  /* --- 1. OSU! Style Parallax Effect --- */
+  const bg = document.getElementById('bg-layer');
+  document.addEventListener('mousemove', (e) => {
+    const x = e.clientX / window.innerWidth;
+    const y = e.clientY / window.innerHeight;
+    
+    // Move background slightly opposite to mouse
+    bg.style.transform = `translate(-${x * 20}px, -${y * 20}px)`;
+  });
+
+  /* --- 2. Subtle Matrix Rain (0s and 1s) --- */
+  const canvas = document.getElementById('matrix-canvas');
+  const ctx = canvas.getContext('2d');
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const characters = "01";
+  const fontSize = 14;
+  const columns = canvas.width / fontSize;
+  const drops = [];
+
+  // Initialize drops randomly to make it look organic
+  for(let x = 0; x < columns; x++) {
+    drops[x] = Math.random() * canvas.height; 
+  }
+
+  function drawMatrix() {
+    // Clear with very transparent black to create trails
+    ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "#ff8da0"; // Your accent color
+    ctx.font = fontSize + "px monospace";
+
+    for(let i = 0; i < drops.length; i++) {
+      // Only draw some characters to keep it subtle (random check)
+      if (Math.random() > 0.95) {
+        const text = characters.charAt(Math.floor(Math.random() * characters.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
       }
       
-      // Start typing after a small delay
-      setTimeout(typeNodes, 500);
-    });
-  </script>
+      if(drops[i] * fontSize > canvas.height && Math.random() > 0.975)
+        drops[i] = 0;
+      
+      drops[i]++;
+    }
+  }
+  // Low frame rate for "retro" feel
+  setInterval(drawMatrix, 50);
+
+  window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
+
+  /* --- 3. Typewriter Effect (Preserving HTML) --- */
+  const source = document.getElementById('source-text');
+  const target = document.getElementById('typewriter-container');
+  
+  // Split source by newlines to type line by line
+  // We grab innerHTML so links are preserved
+  const lines = source.innerHTML.split('\n');
+  let lineIndex = 0;
+
+  function typeLine() {
+    if (lineIndex < lines.length) {
+      const lineContent = lines[lineIndex];
+      const div = document.createElement('div');
+      
+      // If line contains HTML (links), append instantly to preserve functionality
+      // If plain text, simulate typing
+      if (lineContent.includes('<')) {
+        div.innerHTML = lineContent;
+        target.appendChild(div);
+        lineIndex++;
+        setTimeout(typeLine, 150); // Fast delay for links
+      } else {
+        target.appendChild(div);
+        let charIndex = 0;
+        div.classList.add('cursor'); // Add cursor to current line
+        
+        function typeChar() {
+          if (charIndex < lineContent.length) {
+            div.textContent += lineContent.charAt(charIndex);
+            charIndex++;
+            setTimeout(typeChar, 20); // Typing speed
+          } else {
+            div.classList.remove('cursor');
+            lineIndex++;
+            setTimeout(typeLine, 50);
+          }
+        }
+        typeChar();
+      }
+    } else {
+      // Done typing - Add blinking cursor at the very end
+      const cursor = document.createElement('span');
+      cursor.className = 'cursor';
+      target.appendChild(cursor);
+    }
+  }
+
+  // Start typing after page load
+  setTimeout(typeLine, 500);
+
+</script>
 </body>
 </html>
