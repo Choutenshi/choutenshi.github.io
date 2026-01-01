@@ -125,7 +125,7 @@
       line-height: 1.7;
       white-space: pre-wrap;
       min-height: 200px;
-      width: 70%; /* Give space for the GIF */
+      width: 100%;
     }
 
     .prompt { color: var(--accent); margin-right: 8px; }
@@ -151,7 +151,7 @@
       margin-top: 25px;
       opacity: 0;
       transition: opacity 1s ease;
-      width: 70%;
+      width: 100%;
     }
 
     .chip {
@@ -190,11 +190,6 @@
     .fade-in { opacity: 1 !important; }
     .line { margin-bottom: 4px; display: block; }
 
-    /* Mobile handling: Hide GIF if screen is too small */
-    @media (max-width: 600px) {
-      .floating-gif { display: none; }
-      #terminal-body, .chips { width: 100%; }
-    }
   </style>
 </head>
 <body id="body-main">
@@ -209,8 +204,6 @@
   </audio>
 
   <div class="terminal" id="main-terminal">
-    <img src="https://giffiles.alphacoders.com/171/171375.gif" class="floating-gif bobbing" id="lain-gif">
-
     <div class="header">Alvin "Izayoi" Abdul · Choutenshi</div>
     <div id="terminal-body"></div>
     <div class="chips" id="chips-area">
@@ -230,7 +223,6 @@
   const bg = document.getElementById('bg-layer');
   const terminal = document.getElementById('main-terminal');
   const bodyMain = document.getElementById('body-main');
-  const lainGif = document.getElementById('lain-gif');
   
   overlay.addEventListener('click', () => {
     music.play();
@@ -240,7 +232,6 @@
     setTimeout(() => {
       overlay.style.display = 'none';
       terminal.classList.add('visible');
-      lainGif.style.opacity = '0.7'; // Glitch in the GIF
       typeWriter();
     }, 400);
   });
