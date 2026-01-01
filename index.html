@@ -112,30 +112,6 @@
       visibility: visible;
     }
 
-    /* Floating GIF Styling */
-    .floating-gif {
-      position: absolute;
-      right: 40px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 180px; /* Adjust size here */
-      z-index: 6;
-      opacity: 0;
-      pointer-events: none;
-      filter: drop-shadow(0 0 10px var(--accent-glow));
-      transition: opacity 1s ease;
-    }
-
-    /* Bobbing animation for the GIF */
-    .bobbing {
-      animation: bob 3s ease-in-out infinite;
-    }
-
-    @keyframes bob {
-      0%, 100% { transform: translateY(-50%); }
-      50% { transform: translateY(-55%); }
-    }
-
     .header {
       font-size: 13px;
       color: var(--muted);
