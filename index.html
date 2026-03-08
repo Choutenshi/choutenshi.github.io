@@ -36,6 +36,17 @@
     * { box-sizing: border-box; }
 
     body {
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    }
+
+    a {
+    user-select: text;
+    -webkit-user-select: text;
+    }
+
+    body {
       margin: 0;
       min-height: 100vh;
       background-color: var(--bg);
@@ -178,6 +189,25 @@
       transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
+    .chip {
+    cursor: pointer;
+    }
+
+    .chip.clicked {
+    animation: chipClick 0.35s ease;
+    }
+
+    @keyframes chipClick {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.25); }
+    70% { transform: scale(0.9); }
+    100% { transform: scale(1); }
+    }
+    .chip:active {
+    transform: scale(0.9);
+    background: rgba(255,141,160,0.25);
+    }
+
     .chip:hover {
       background: rgba(255, 141, 160, 0.15);
       border-color: var(--accent);
@@ -232,6 +262,15 @@
   </div>
 
 <script>
+  document.querySelectorAll('.chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    chip.classList.add('clicked');
+
+    setTimeout(() => {
+      chip.classList.remove('clicked');
+    }, 350);
+  });
+});
   const overlay = document.getElementById('overlay');
   const music = document.getElementById('bg-music');
   const bg = document.getElementById('bg-layer');
