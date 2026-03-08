@@ -46,40 +46,6 @@
       justify-content: center;
       overflow: hidden;
       position: relative;
-
-      user-select: none;
-      -webkit-user-select: none;
-      -ms-user-select: none;
-      cursor: default;
-
-      filter: contrast(1.05) brightness(1.05);
-    }
-
-    a {
-      user-select: text;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 9;
-
-      background:
-        radial-gradient(circle at center,
-          rgba(255,141,160,0.08) 0%,
-          rgba(0,0,0,0.2) 70%,
-          rgba(0,0,0,0.55) 100%);
-
-      mix-blend-mode: screen;
-      animation: crt-flicker 0.15s infinite;
-    }
-
-    @keyframes crt-flicker {
-      0% { opacity: 0.96; }
-      50% { opacity: 1; }
-      100% { opacity: 0.94; }
     }
 
     #bg-layer {
@@ -210,7 +176,6 @@
       font-size: 12px;
       color: var(--muted);
       transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      cursor: pointer;
     }
 
     .chip:hover {
@@ -219,11 +184,6 @@
       color: white;
       transform: translateY(-4px) scale(1.05);
       box-shadow: 0 5px 15px rgba(255, 141, 160, 0.2);
-    }
-
-    .chip:active {
-      transform: scale(0.9);
-      box-shadow: 0 0 15px var(--accent-glow);
     }
 
     .footer {
@@ -240,237 +200,167 @@
       color: var(--accent);
       animation: blink 1s step-end infinite;
     }
-
     @keyframes blink { 50% { opacity: 0; } }
-
     .fade-in { opacity: 1 !important; }
-
     .line { margin-bottom: 4px; display: block; }
 
   </style>
 </head>
 <body id="body-main">
 
-<div id="overlay">Connect to the Wired</div>
+  <div id="overlay">Connect to the Wired</div>
 
-<div id="bg-layer"></div>
-<canvas id="matrix-canvas"></canvas>
+  <div id="bg-layer"></div>
+  <canvas id="matrix-canvas"></canvas>
 
-<audio id="bg-music" loop>
-  <source src="/images/lain.mp3" type="audio/mpeg">
-</audio>
+  <audio id="bg-music" loop>
+    <source src="/images/lain.mp3" type="audio/mpeg">
+  </audio>
 
-<div class="terminal" id="main-terminal">
-<div class="header">Alvin "Izayoi" Abdul · Choutenshi</div>
-<div id="terminal-body"></div>
-
-<div class="chips" id="chips-area">
-  <div class="chip">programmer</div>
-  <div class="chip">pianist</div>
-  <div class="chip">singer</div>
-  <div class="chip">author</div>
-  <div class="chip">polyglot</div>
-  <div class="chip">chess gm</div>
-</div>
-
-<div class="footer" id="footer-area">
-maybe it's a dream, maybe nothing else is real. But it doesn't change a thing, if I tell u how I feel.
-</div>
-</div>
+  <div class="terminal" id="main-terminal">
+    <div class="header">Alvin "Izayoi" Abdul · Choutenshi</div>
+    <div id="terminal-body"></div>
+    <div class="chips" id="chips-area">
+      <div class="chip">programmer</div>
+      <div class="chip">pianist</div>
+      <div class="chip">singer</div>
+      <div class="chip">author</div>
+      <div class="chip">polyglot</div>
+      <div class="chip">chess gm</div>
+    </div>
+    <div class="footer" id="footer-area">maybe it's a dream, maybe nothing else is real. But it doesn't change a thing, if I tell u how I feel.</div>
+  </div>
 
 <script>
-
-const overlay = document.getElementById('overlay');
-const music = document.getElementById('bg-music');
-const bg = document.getElementById('bg-layer');
-const terminal = document.getElementById('main-terminal');
-const bodyMain = document.getElementById('body-main');
-
-overlay.addEventListener('click', () => {
-  music.play();
-  bodyMain.classList.add('glitch-flash');
-  overlay.style.opacity = '0';
-
-  setTimeout(() => {
-    overlay.style.display = 'none';
-    terminal.classList.add('visible');
-    typeWriter();
-  }, 400);
-});
-
-document.addEventListener('mousemove', (e) => {
-  const moveX = (e.clientX - window.innerWidth / 2) * 0.015;
-  const moveY = (e.clientY - window.innerHeight / 2) * 0.015;
-  bg.style.transform = `translate3d(${-moveX}px, ${-moveY}px, 0)`;
-});
-
-document.querySelectorAll('.chip').forEach(chip => {
-  chip.addEventListener('click', () => {
-
-    chip.style.transform = "scale(0.9)";
-
+  const overlay = document.getElementById('overlay');
+  const music = document.getElementById('bg-music');
+  const bg = document.getElementById('bg-layer');
+  const terminal = document.getElementById('main-terminal');
+  const bodyMain = document.getElementById('body-main');
+  
+  overlay.addEventListener('click', () => {
+    music.play();
+    bodyMain.classList.add('glitch-flash');
+    overlay.style.opacity = '0';
+    
     setTimeout(() => {
-      chip.style.transform = "";
-    }, 120);
-
-    console.log("clicked:", chip.textContent);
-
+      overlay.style.display = 'none';
+      terminal.classList.add('visible');
+      typeWriter();
+    }, 400);
   });
-});
 
-const canvas = document.getElementById('matrix-canvas');
-const ctx = canvas.getContext('2d');
+  document.addEventListener('mousemove', (e) => {
+    const moveX = (e.clientX - window.innerWidth / 2) * 0.015;
+    const moveY = (e.clientY - window.innerHeight / 2) * 0.015;
+    bg.style.transform = `translate3d(${-moveX}px, ${-moveY}px, 0)`;
+  });
 
-let width, height, columns, drops;
+  const canvas = document.getElementById('matrix-canvas');
+  const ctx = canvas.getContext('2d');
+  let width, height, columns, drops;
 
-function resize() {
-  width = canvas.width = window.innerWidth;
-  height = canvas.height = window.innerHeight;
-  columns = Math.floor(width / 20);
-  drops = Array(columns).fill(0);
-}
-
-window.addEventListener('resize', resize);
-resize();
-
-function drawMatrix() {
-
-  ctx.fillStyle = 'rgba(5,5,5,0.15)';
-  ctx.fillRect(0,0,width,height);
-
-  ctx.fillStyle = '#ff8da0';
-  ctx.font = '12px monospace';
-
-  for (let i=0;i<drops.length;i++) {
-
-    if(Math.random() > 0.985){
-      ctx.fillText(Math.floor(Math.random()*2), i*20, drops[i]*20);
-    }
-
-    if (drops[i]*20 > height && Math.random()>0.975){
-      drops[i]=0;
-    }
-
-    drops[i]++;
+  function resize() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+    columns = Math.floor(width / 20);
+    drops = Array(columns).fill(0);
   }
+  window.addEventListener('resize', resize);
+  resize();
 
+  function drawMatrix() {
+    ctx.fillStyle = 'rgba(5, 5, 5, 0.15)';
+    ctx.fillRect(0, 0, width, height);
+    ctx.fillStyle = '#ff8da0';
+    ctx.font = '12px monospace';
+    for (let i = 0; i < drops.length; i++) {
+      if(Math.random() > 0.985) {
+         ctx.fillText(Math.floor(Math.random() * 2), i * 20, drops[i] * 20);
+      }
+      if (drops[i] * 20 > height && Math.random() > 0.975) drops[i] = 0;
+      drops[i]++;
+    }
+    requestAnimationFrame(drawMatrix);
+  }
   requestAnimationFrame(drawMatrix);
-}
 
-requestAnimationFrame(drawMatrix);
+  const commands = [
+    { type: 'cmd', text: 'whoami' },
+    { type: 'text', text: 'name: Alvin "Izayoi" Abdul' },
+    { type: 'text', text: 'status: high school student, alive' },
+    { type: 'text', text: 'hobbies: chess · tech · music' },
+    { type: 'text', text: 'aka: Choutenshi' },
+    { type: 'br' },
+    { type: 'cmd', text: 'cat links.txt' },
+    { type: 'link', url: 'https://twitter.com/@choutenzhi' },
+    { type: 'link', url: 'https://www.reddit.com/user/Choutenz/' },
+    { type: 'link', url: 'https://www.youtube.com/@Choutenshii' },
+    { type: 'link', url: 'https://github.com/choutenshi' },
+    { type: 'link', url: 'https://discord.gg/WNNrdNFztG' },
+    { type: 'link', url: 'https://www.instagram.com/_choutenshi/' },
+    { type: 'link', url: 'mailto:choutenshi@proton.me' }
+  ];
 
-const commands = [
-{ type:'cmd', text:'whoami' },
-{ type:'text', text:'name: Alvin "Izayoi" Abdul' },
-{ type:'text', text:'status: high school student, alive' },
-{ type:'text', text:'hobbies: chess · tech · music' },
-{ type:'text', text:'aka: Choutenshi' },
-{ type:'br' },
-{ type:'cmd', text:'cat links.txt' },
-{ type:'link', url:'https://twitter.com/@choutenzhi' },
-{ type:'link', url:'https://www.reddit.com/user/Choutenz/' },
-{ type:'link', url:'https://www.youtube.com/@Choutenshii' },
-{ type:'link', url:'https://github.com/choutenshi' },
-{ type:'link', url:'https://discord.gg/WNNrdNFztG' },
-{ type:'link', url:'https://www.instagram.com/_choutenshi/' },
-{ type:'link', url:'mailto:choutenshi@proton.me' }
-];
+  const terminalBody = document.getElementById('terminal-body');
+  const chips = document.getElementById('chips-area');
+  const footer = document.getElementById('footer-area');
+  let cmdIndex = 0;
 
-const terminalBody = document.getElementById('terminal-body');
-const chips = document.getElementById('chips-area');
-const footer = document.getElementById('footer-area');
+  function typeWriter() {
+    if (cmdIndex >= commands.length) {
+      chips.classList.add('fade-in');
+      footer.classList.add('fade-in');
+      return;
+    }
 
-let cmdIndex = 0;
+    const item = commands[cmdIndex];
+    const div = document.createElement('div');
+    div.className = 'line';
+    if (item.type === 'cmd') {
+      const p = document.createElement('span');
+      p.className = 'prompt';
+      p.textContent = '$ ';
+      div.appendChild(p);
+    }
+    terminalBody.appendChild(div);
 
-function typeWriter(){
+    if (item.type === 'br') {
+      div.innerHTML = '&nbsp;';
+      cmdIndex++;
+      setTimeout(typeWriter, 40);
+      return;
+    }
 
-if(cmdIndex >= commands.length){
+    let content = item.type === 'link' ? item.url : item.text;
+    let charIndex = 0;
+    let targetNode = div;
 
-chips.classList.add('fade-in');
-footer.classList.add('fade-in');
+    if (item.type === 'link') {
+      const a = document.createElement('a');
+      a.href = item.url;
+      a.target = "_blank";
+      div.appendChild(a);
+      targetNode = a;
+    }
 
-return;
-}
+    div.classList.add('cursor');
 
-const item = commands[cmdIndex];
-
-const div = document.createElement('div');
-
-div.className='line';
-
-if(item.type === 'cmd'){
-
-const p = document.createElement('span');
-
-p.className='prompt';
-
-p.textContent='$ ';
-
-div.appendChild(p);
-}
-
-terminalBody.appendChild(div);
-
-if(item.type === 'br'){
-
-div.innerHTML='&nbsp;';
-cmdIndex++;
-setTimeout(typeWriter,40);
-
-return;
-}
-
-let content = item.type==='link' ? item.url : item.text;
-
-let charIndex=0;
-
-let targetNode = div;
-
-if(item.type==='link'){
-
-const a=document.createElement('a');
-
-a.href=item.url;
-a.target="_blank";
-
-div.appendChild(a);
-
-targetNode=a;
-}
-
-div.classList.add('cursor');
-
-function typeChar(){
-
-if(charIndex < content.length){
-
-targetNode.textContent += content.charAt(charIndex);
-
-charIndex++;
-
-let delay=Math.random()*25+5;
-
-if(Math.random()<0.05){
-delay+=120;
-}
-
-setTimeout(typeChar,delay);
-
-}else{
-
-div.classList.remove('cursor');
-
-cmdIndex++;
-
-setTimeout(typeWriter,50);
-}
-}
-
-typeChar();
-
-}
-
+    function typeChar() {
+      if (charIndex < content.length) {
+        targetNode.textContent += content.charAt(charIndex);
+        charIndex++;
+        let delay = Math.random() * 25 + 5; 
+        if (Math.random() < 0.05) delay += 120; 
+        setTimeout(typeChar, delay);
+      } else {
+        div.classList.remove('cursor');
+        cmdIndex++;
+        setTimeout(typeWriter, 50);
+      }
+    }
+    typeChar();
+  }
 </script>
-
 </body>
 </html>
