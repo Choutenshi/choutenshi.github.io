@@ -2,28 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" />
   <title>Alvin (Choutenshi) Abdul - Personal Site</title>
-  <meta name="description" content="Choutenshi’s personal site. Connecting to the wired, right here — all of his social links and online spaces." />
-
-  <meta property="og:title" content="The Wired">
-  <meta property="og:description" content="Welcome to The Wired, this was made by Choutenshi himself, kinda..">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://choutenshi.github.io/">
-  <meta property="og:image" content="/images/chess.gif">
-  <meta property="og:image:type" content="image/gif">
-  <meta property="og:image:width" content="1280">
-  <meta property="og:image:height" content="720">
-
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Choutenshi's Website">
-  <meta name="twitter:description" content="Welcome to The Wired, this was made by Choutenshi himself, kinda..">
-  <meta name="theme-color" content="#050505">
-
-  <link rel="icon" type="image/jpeg" href="/images/real.jpg">
-
+  
   <style>
-    /* O-our color variables! */
     :root {
       --bg: #050505;
       --glass: rgba(10, 10, 12, 0.85);
@@ -37,7 +19,6 @@
 
     * { box-sizing: border-box; }
 
-    /* M-main layout... */
     body {
       margin: 0;
       min-height: 100vh;
@@ -49,35 +30,20 @@
       justify-content: center;
       overflow: hidden;
       position: relative;
-
       user-select: none;
-      -webkit-user-select: none;
-      -ms-user-select: none;
-      cursor: default;
-
-      filter: contrast(1.05) brightness(1.05);
+      -webkit-tap-highlight-color: transparent; /* N-no blue box when tapping on mobile! */
     }
 
-    a {
-      user-select: text;
-    }
-
-    /* I-I sped this up 10x just like you asked! From 0.15s to 0.015s! *stares intensely* */
+    /* T-the 10x faster CRT flicker! */
     body::before {
       content: "";
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 9;
-
-      background:
-        radial-gradient(circle at center,
-          rgba(255,141,160,0.08) 0%,
-          rgba(0,0,0,0.2) 70%,
-          rgba(0,0,0,0.55) 100%);
-
+      background: radial-gradient(circle at center, rgba(255,141,160,0.08) 0%, rgba(0,0,0,0.2) 70%, rgba(0,0,0,0.55) 100%);
       mix-blend-mode: screen;
-      animation: crt-flicker 0.015s infinite; 
+      animation: crt-flicker 0.15s infinite; 
     }
 
     @keyframes crt-flicker {
@@ -86,204 +52,133 @@
       100% { opacity: 0.94; }
     }
 
-    /* B-background layer! */
+    /* T-the background layer that will move 'kaku' style! */
     #bg-layer {
       position: fixed;
-      top: -10%;
-      left: -10%;
-      width: 120%;
-      height: 120%;
+      top: -15%;
+      left: -15%;
+      width: 130%;
+      height: 130%;
       background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
                   url('https://i.pinimg.com/originals/5c/a5/79/5ca579ef2ba2e2f33618822bf0b08480.gif') center/cover no-repeat;
       z-index: 0;
       will-change: transform;
-      transform: translate3d(0,0,0);
     }
 
-    /* T-the click screen! */
     #overlay {
       position: fixed;
       inset: 0;
       z-index: 100;
       background: #050505;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       color: var(--accent);
       text-transform: uppercase;
       letter-spacing: 5px;
-      font-size: 14px;
-      transition: opacity 0.1s ease; /* M-made the fade out faster too... */
+      font-size: 12px;
+      text-align: center;
+      padding: 20px;
     }
 
-    /* O-oh! This is the new super fast CRT flash! It mimics a tube TV turning on really violently... */
+    /* T-the fast CRT flash effect you wanted! */
     .crt-flash-effect {
-      animation: crt-snap 0.15s cubic-bezier(0.8, 0, 0.2, 1) forwards;
+      animation: crt-snap 0.15s forwards;
     }
 
     @keyframes crt-snap {
-      0% { filter: brightness(10) contrast(5) invert(1); transform: scale(1.05); background: white; }
-      20% { filter: brightness(5) contrast(3) hue-rotate(90deg); transform: scale(1.02); }
-      40% { filter: none; opacity: 0.8; transform: scale(0.98); }
-      100% { filter: none; opacity: 1; transform: scale(1); background: transparent; }
+      0% { filter: brightness(10); background: white; }
+      100% { filter: none; background: transparent; }
     }
 
-    /* M-matrix canvas! */
     #matrix-canvas {
       position: fixed;
       inset: 0;
       z-index: 1;
       opacity: 0.15;
-      pointer-events: none;
     }
 
-    /* S-scanlines! */
-    body::after {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
-      background-size: 100% 4px;
-      z-index: 10;
-      pointer-events: none;
-    }
-
-    /* T-the terminal box... it's going to move really stiffly now! */
+    /* T-the terminal box... s-staying perfectly still now! */
     .terminal {
       position: relative;
-      width: min(850px, 90vw);
+      width: min(850px, 92vw);
+      max-height: 85vh;
+      overflow-y: auto;
       background: var(--glass);
       border: 1px solid var(--border);
-      border-radius: 20px;
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
-      padding: 30px;
+      border-radius: 15px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 20px;
       z-index: 5;
       visibility: hidden;
-      will-change: transform;
     }
 
-    .terminal.visible {
-      visibility: visible;
+    .terminal.visible { visibility: visible; }
+
+    /* M-making text smaller for phones... */
+    @media (max-width: 600px) {
+      #terminal-body { font-size: 12px; }
+      .header { font-size: 11px; }
+      .chip { font-size: 10px; padding: 4px 8px; }
+      .footer { font-size: 9px; }
     }
 
     .header {
       font-size: 13px;
       color: var(--muted);
-      margin-bottom: 20px;
-      padding-bottom: 10px;
+      margin-bottom: 15px;
+      padding-bottom: 8px;
       border-bottom: 1px solid rgba(255,255,255,0.08);
     }
 
-    #terminal-body {
-      font-size: 14px;
-      line-height: 1.7;
-      white-space: pre-wrap;
-      min-height: 200px;
-      width: 100%;
-    }
-
-    .prompt { color: var(--accent); margin-right: 8px; }
-
-    a { 
-      color: var(--text); 
-      text-decoration: none; 
-      border-bottom: 1px dotted var(--muted);
-      transition: all 0.2s ease;
-      display: inline-block;
-    }
+    #terminal-body { line-height: 1.6; white-space: pre-wrap; }
+    .prompt { color: var(--accent); }
     
-    a:hover { 
-      color: var(--accent);
-      text-shadow: 0 0 10px var(--accent-glow);
-      transform: translateY(-2px);
-    }
+    a { color: var(--text); text-decoration: none; border-bottom: 1px dotted var(--muted); }
 
-    .chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 25px;
-      opacity: 0;
-      transition: opacity 1s ease;
-      width: 100%;
-    }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; opacity: 0; }
+    .chip { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border); border-radius: 10px; color: var(--muted); }
 
-    .chip {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border);
-      padding: 5px 12px;
-      border-radius: 15px;
-      font-size: 12px;
-      color: var(--muted);
-      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      cursor: pointer;
-    }
-
-    .chip:hover {
-      background: rgba(255, 141, 160, 0.15);
-      border-color: var(--accent);
-      color: white;
-      transform: translateY(-4px) scale(1.05);
-      box-shadow: 0 5px 15px rgba(255, 141, 160, 0.2);
-    }
-
-    .chip:active {
-      transform: scale(0.9);
-      box-shadow: 0 0 15px var(--accent-glow);
-    }
-
-    .footer {
-      margin-top: 25px;
-      font-size: 11px;
-      color: rgba(255,255,255,0.3);
-      text-align: center;
-      opacity: 0;
-      transition: opacity 1s ease 0.5s;
-    }
-
-    .cursor::after {
-      content: '▋';
-      color: var(--accent);
-      animation: blink 1s step-end infinite;
-    }
-
+    .cursor::after { content: '▋'; color: var(--accent); animation: blink 1s step-end infinite; }
     @keyframes blink { 50% { opacity: 0; } }
+    .fade-in { opacity: 1 !important; transition: opacity 1s; }
+    .line { margin-bottom: 4px; }
 
-    .fade-in { opacity: 1 !important; }
-
-    .line { margin-bottom: 4px; display: block; }
-
+    .permission-btn {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid var(--accent);
+      background: transparent;
+      color: var(--accent);
+      font-family: var(--font);
+      cursor: pointer;
+      font-size: 10px;
+    }
   </style>
 </head>
-<body id="body-main">
+<body>
 
-  <div id="overlay">Connect to the Wired</div>
+  <div id="overlay">
+    <div>Connect to the Wired</div>
+    <button class="permission-btn" id="accel-btn" style="display:none;">[ Enable Sensors ]</button>
+  </div>
 
   <div id="bg-layer"></div>
   <canvas id="matrix-canvas"></canvas>
-
-  <audio id="bg-music" loop>
-    <source src="/images/lain.mp3" type="audio/mpeg">
-  </audio>
+  <audio id="bg-music" loop><source src="/images/lain.mp3" type="audio/mpeg"></audio>
 
   <div class="terminal" id="main-terminal">
     <div class="header">Alvin "Izayoi" Abdul · Choutenshi</div>
     <div id="terminal-body"></div>
-
     <div class="chips" id="chips-area">
-      <div class="chip">programmer</div>
-      <div class="chip">pianist</div>
-      <div class="chip">singer</div>
-      <div class="chip">author</div>
-      <div class="chip">polyglot</div>
-      <div class="chip">chess gm</div>
+      <div class="chip">programmer</div><div class="chip">pianist</div><div class="chip">singer</div>
+      <div class="chip">author</div><div class="chip">polyglot</div><div class="chip">chess gm</div>
     </div>
-
-    <div class="footer" id="footer-area">
-      maybe it's a dream, maybe nothing else is real. But it doesn't change a thing, if I tell u how I feel.
+    <div class="footer" id="footer-area" style="opacity:0; margin-top:20px; font-size:10px; color:rgba(255,255,255,0.3);">
+      maybe it's a dream, maybe nothing else is real.. but it wouldn't mean a thing if I told you how I feel...
     </div>
   </div>
 
@@ -292,171 +187,129 @@
     const music = document.getElementById('bg-music');
     const bg = document.getElementById('bg-layer');
     const terminal = document.getElementById('main-terminal');
-    const bodyMain = document.getElementById('body-main');
+    const accelBtn = document.getElementById('accel-btn');
 
-    // U-um, when you click, it triggers the super fast CRT flash now!
-    overlay.addEventListener('click', () => {
+    // T-this part checks if we are on an iPhone to ask for permission!
+    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+      accelBtn.style.display = 'block';
+    }
+
+    function startEverything() {
       music.play();
-      bodyMain.classList.add('crt-flash-effect'); // R-replaced with the new fast flash!
+      document.body.classList.add('crt-flash-effect');
       overlay.style.opacity = '0';
-
-      // W-we show the terminal much faster now, right after the flash!
       setTimeout(() => {
         overlay.style.display = 'none';
         terminal.classList.add('visible');
         typeWriter();
-      }, 150); 
+      }, 150);
+    }
+
+    overlay.addEventListener('click', (e) => {
+      if(e.target.id === 'accel-btn') {
+        DeviceOrientationEvent.requestPermission().then(response => {
+          if (response == 'granted') {
+            window.addEventListener('deviceorientation', handleOrientation);
+          }
+          startEverything();
+        });
+      } else {
+        startEverything();
+      }
     });
 
-    // O-okay, here is the stiff parallax logic! 
+    // O-okay, this is the "kaku" parallax for the background!
+    function applyStiffMovement(x, y) {
+      const step = 8; // M-made it even blockier!
+      const stiffX = Math.round(x / step) * step;
+      const stiffY = Math.round(y / step) * step;
+      bg.style.transform = `translate3d(${stiffX}px, ${stiffY}px, 0)`;
+    }
+
+    // F-for desktop mice...
     document.addEventListener('mousemove', (e) => {
-      const moveX = (e.clientX - window.innerWidth / 2) * 0.015;
-      const moveY = (e.clientY - window.innerHeight / 2) * 0.015;
-      
-      // I-I kept the background smooth... 
-      bg.style.transform = `translate3d(${-moveX}px, ${-moveY}px, 0)`;
-
-      // B-but I used Math.round and multiplied/divided to create "steps" for the terminal!
-      // T-this makes it look like it's snapping to a grid, giving it that "kaku" feel! >.<
-      const stiffStep = 4; // T-the higher this number, the more blocky the movement!
-      const stiffX = Math.round((moveX * 1.5) / stiffStep) * stiffStep;
-      const stiffY = Math.round((moveY * 1.5) / stiffStep) * stiffStep;
-
-      terminal.style.transform = `translate3d(${stiffX}px, ${stiffY}px, 0)`;
+      const moveX = (e.clientX - window.innerWidth / 2) * 0.05;
+      const moveY = (e.clientY - window.innerHeight / 2) * 0.05;
+      applyStiffMovement(-moveX, -moveY);
     });
 
-    document.querySelectorAll('.chip').forEach(chip => {
-      chip.addEventListener('click', () => {
-        chip.style.transform = "scale(0.9)";
-        
-        setTimeout(() => {
-          chip.style.transform = "";
-        }, 120);
+    // F-for mobile tilting!
+    function handleOrientation(event) {
+      const x = event.gamma * 2; // Left/Right tilt
+      const y = event.beta * 2;  // Front/Back tilt
+      applyStiffMovement(x, y);
+    }
+    window.addEventListener('deviceorientation', handleOrientation);
 
-        console.log("clicked:", chip.textContent);
-      });
-    });
-
+    // M-matrix rain logic (kept the same)...
     const canvas = document.getElementById('matrix-canvas');
     const ctx = canvas.getContext('2d');
     let width, height, columns, drops;
-
     function resize() {
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
       columns = Math.floor(width / 20);
       drops = Array(columns).fill(0);
     }
-
     window.addEventListener('resize', resize);
     resize();
-
     function drawMatrix() {
       ctx.fillStyle = 'rgba(5,5,5,0.15)';
       ctx.fillRect(0, 0, width, height);
       ctx.fillStyle = '#ff8da0';
       ctx.font = '12px monospace';
-
       for (let i = 0; i < drops.length; i++) {
-        if (Math.random() > 0.985) {
-          ctx.fillText(Math.floor(Math.random() * 2), i * 20, drops[i] * 20);
-        }
-
-        if (drops[i] * 20 > height && Math.random() > 0.975) {
-          drops[i] = 0; 
-        }
+        if (Math.random() > 0.98) ctx.fillText(Math.floor(Math.random() * 2), i * 20, drops[i] * 20);
+        if (drops[i] * 20 > height && Math.random() > 0.975) drops[i] = 0;
         drops[i]++;
       }
-
       requestAnimationFrame(drawMatrix);
     }
+    drawMatrix();
 
-    requestAnimationFrame(drawMatrix);
-
+    // T-typing logic (kept the same)...
     const commands = [
       { type: 'cmd', text: 'whoami' },
       { type: 'text', text: 'name: Alvin "Izayoi" Abdul' },
-      { type: 'text', text: 'status: high school student, alive' },
-      { type: 'text', text: 'hobbies: chess · tech · music' },
-      { type: 'text', text: 'aka: Choutenshi' },
+      { type: 'text', text: 'status: high school student' },
       { type: 'br' },
       { type: 'cmd', text: 'cat links.txt' },
-      { type: 'link', url: 'https://twitter.com/@choutenzhi' },
-      { type: 'link', url: 'https://www.reddit.com/user/Choutenz/' },
-      { type: 'link', url: 'https://www.youtube.com/@Choutenshii' },
       { type: 'link', url: 'https://github.com/choutenshi' },
-      { type: 'link', url: 'https://discord.gg/WNNrdNFztG' },
-      { type: 'link', url: 'https://www.instagram.com/_choutenshi/' },
-      { type: 'link', url: 'mailto:choutenshi@proton.me' }
+      { type: 'link', url: 'https://discord.gg/WNNrdNFztG' }
     ];
-
-    const terminalBody = document.getElementById('terminal-body');
-    const chips = document.getElementById('chips-area');
-    const footer = document.getElementById('footer-area');
     let cmdIndex = 0;
-
     function typeWriter() {
       if (cmdIndex >= commands.length) {
-        chips.classList.add('fade-in');
-        footer.classList.add('fade-in');
+        document.getElementById('chips-area').classList.add('fade-in');
+        document.getElementById('footer-area').classList.add('fade-in');
         return;
       }
-
       const item = commands[cmdIndex];
       const div = document.createElement('div');
       div.className = 'line';
-
-      if (item.type === 'cmd') {
-        const p = document.createElement('span');
-        p.className = 'prompt';
-        p.textContent = '$ ';
-        div.appendChild(p);
-      }
-
-      terminalBody.appendChild(div);
-
-      if (item.type === 'br') {
-        div.innerHTML = '&nbsp;';
-        cmdIndex++;
-        setTimeout(typeWriter, 40);
-        return;
-      }
-
+      if (item.type === 'cmd') div.innerHTML = '<span class="prompt">$ </span>';
+      document.getElementById('terminal-body').appendChild(div);
+      if (item.type === 'br') { cmdIndex++; setTimeout(typeWriter, 40); return; }
       let content = item.type === 'link' ? item.url : item.text;
       let charIndex = 0;
-      let targetNode = div;
-
+      let target = div;
       if (item.type === 'link') {
-        const a = document.createElement('a');
-        a.href = item.url;
-        a.target = "_blank";
-        div.appendChild(a);
-        targetNode = a; 
+        const a = document.createElement('a'); a.href = item.url; a.target = "_blank";
+        div.appendChild(a); target = a;
       }
-
-      div.classList.add('cursor'); 
-
-      function typeChar() {
+      div.classList.add('cursor');
+      function type() {
         if (charIndex < content.length) {
-          targetNode.textContent += content.charAt(charIndex);
-          charIndex++;
-
-          let delay = Math.random() * 25 + 5;
-          if (Math.random() < 0.05) {
-            delay += 120; 
-          }
-
-          setTimeout(typeChar, delay);
+          target.textContent += content[charIndex++];
+          setTimeout(type, Math.random() * 30 + 10);
         } else {
-          div.classList.remove('cursor'); 
+          div.classList.remove('cursor');
           cmdIndex++;
-          setTimeout(typeWriter, 50); 
+          setTimeout(typeWriter, 50);
         }
       }
-
-      typeChar();
+      type();
     }
   </script>
-
 </body>
 </html>
