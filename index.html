@@ -279,7 +279,7 @@
     <a href="https://www.instagram.com/_choutenshi/">Instagram</a>
     <a href="https://www.youtube.com/@Choutenshii">YouTube</a>
     <a href="https://www.reddit.com/user/Choutenz/">Reddit</a>
-    <a href="https://x.com/@Choutenzhi">X</a>
+    <a href="https://x.com/Choutenzhi">X</a>
     <a href="https://www.linkedin.com/in/choutenshi">LinkedIn</a>
     <a href="https://www.tiktok.com/@_choutenshi">Tiktok</a>
     <a href="https://www.chess.com/member/choutenshi">Chess.com</a>
@@ -378,7 +378,7 @@
     { type: 'text', text: 'aka: Choutenshi, MHDXVN' },
     { type: 'br' },
     { type: 'cmd', text: 'cat links.txt' },
-    { type: 'link', url: 'https://twitter.com/@choutenzhi' },
+    { type: 'link', url: 'https://twitter.com/choutenzhi' },
     { type: 'link', url: 'https://www.reddit.com/user/Choutenz/' },
     { type: 'link', url: 'https://www.youtube.com/@Choutenshii' },
     { type: 'link', url: 'https://github.com/choutenshi' },
@@ -445,7 +445,17 @@
       }
     }
     typeChar();
-  }
+}
+
+document.addEventListener("visibilitychange", async () => {
+    if (document.hidden) {
+        music.pause();
+    } else {
+        try {
+            await music.play();
+        } catch (_) {}
+    }
+});
 </script>
 </body>
 </html>
